@@ -54,6 +54,7 @@ public class ItemFormController implements Initializable {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
+        txtItemCode.setText(generateItemCode());
         loadTable();
     }
 
@@ -208,6 +209,23 @@ public class ItemFormController implements Initializable {
             itemsObservableArray.add(item);
         });
         tblItem.setItems(itemsObservableArray);
+    }
+
+    private String generateItemCode(){
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet res =  statement.executeQuery("SELECT code from item ORDER BY code DESC LIMIT 1");
+            res.next();
+            String lastId = res.getString(1);
+            int num = Integer.parseInt(lastId.substring(1));
+            num++;
+            String newId = String.format("C%03d", num);
+            System.out.println(newId);
+            return newId;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

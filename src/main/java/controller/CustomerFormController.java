@@ -48,17 +48,13 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-
         txtID.setText(generateCustomerId());
-        System.out.println(generateCustomerId());
         loadTable();
     }
 
@@ -77,121 +73,129 @@ public class CustomerFormController implements Initializable {
                     txtAddress.getText(),
                     Double.parseDouble(txtSalary.getText())
             );
-
-            insertTODatabase(customer);
-            loadTable();
+            boolean isInserted = insertTODatabase(customer);
+            if (isInserted) {
+                loadTable();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Customer not inserted");
+                alert.setContentText("Please check the fields");
+                alert.show();
+            }
         }
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        deleteByID(txtID.getText());
-        loadTable();
+        boolean isDeleted = deleteByID(txtID.getText());
+        if (isDeleted) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Customer deleted");
+            alert.show();
+            loadTable();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Customer not deleted");
+            alert.show();
+            loadTable();
+        }
     }
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        searchByID(txtID.getText());
-        loadTable();
+        Customer customer = searchByID(txtID.getText());
+        if (customer != null) {
+            txtName.setText(customer.getName());
+            txtAddress.setText(customer.getAddress());
+            txtSalary.setText(customer.getSalary().toString());
+        }else{
+            System.out.println("Customer not found");
+        }
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        Customer customer = new Customer(
+        boolean isUpdated = updateCustomer(new Customer(
                 txtID.getText(),
                 txtName.getText(),
                 txtAddress.getText(),
                 Double.parseDouble(txtSalary.getText())
-        );
-        updateCustomer(customer);
-        loadTable();
+        ));
+        if (isUpdated) {
+            System.out.println("Customer updated");
+        }else {
+            System.out.println("Customer not updated");
+        }
     }
 
     private String generateCustomerId(){
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-
             Statement statement = connection.createStatement();
             ResultSet res =  statement.executeQuery("SELECT id from customer ORDER BY id DESC LIMIT 1");
             res.next();
-
             String lastId = res.getString(1);
             int num = Integer.parseInt(lastId.substring(1));
             num++;
             String newId = String.format("C%03d", num);
-
             return newId;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void updateCustomer(Customer customer) {
+    private boolean updateCustomer(Customer customer) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-
             PreparedStatement statement = connection.prepareStatement("update customer set name=?,address=?,salary=? where id=?");
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getAddress());
             statement.setDouble(3, customer.getSalary());
             statement.setString(4, customer.getId());
-
-            if(statement.executeUpdate() >0){
-                System.out.println("Customer has been updated");
-            }
-
+            return statement.executeUpdate() >0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void deleteByID(String id) {
+    private boolean deleteByID(String id) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-
             Statement statement = connection.createStatement();
             int res =  statement.executeUpdate("DELETE FROM customer WHERE id = '" + id + "'");
-            if (res > 0) {
-                System.out.println("Customer has been deleted");
-            }
-
+            return res > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void insertTODatabase(Customer customer) {
+    private boolean insertTODatabase(Customer customer) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-
             PreparedStatement statement = connection.prepareStatement("insert into customer values(?,?,?,?)");
             statement.setString(1, customer.getId());
             statement.setString(2, customer.getName());
             statement.setString(3, customer.getAddress());
             statement.setDouble(4, customer.getSalary());
-
-            if(statement.executeUpdate() >0){
-                System.out.println("Customer inserted successfully");
-            }
-
+            return statement.executeUpdate() >0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void searchByID(String id) {
+    private Customer searchByID(String id) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-
             Statement statement = connection.createStatement();
             ResultSet res =  statement.executeQuery("SELECT * FROM customer where id = '" + id + "'");
             res.next();
-
-            txtName.setText(res.getString(2));
-            txtAddress.setText(res.getString(3));
-            txtSalary.setText(res.getString(4));
-
+            Customer customer = new Customer(
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    Double.parseDouble(res.getString(4))
+            );
+            return customer;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -202,9 +206,7 @@ public class CustomerFormController implements Initializable {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-
             ResultSet res =  statement.executeQuery("SELECT * FROM customer");
-
             while (res.next()) {
                 customerList.add(new Customer(
                         res.getString(1),
@@ -213,11 +215,9 @@ public class CustomerFormController implements Initializable {
                         Double.parseDouble(res.getString(4))
                 ));
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         ObservableList<Customer> customerObservableArray = FXCollections.observableArrayList();
         customerList.forEach(customer -> {
             customerObservableArray.add(customer);

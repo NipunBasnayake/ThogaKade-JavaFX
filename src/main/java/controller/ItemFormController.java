@@ -53,7 +53,6 @@ public class ItemFormController implements Initializable {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
-
         loadTable();
     }
 
@@ -65,9 +64,9 @@ public class ItemFormController implements Initializable {
                     Double.parseDouble(txtUnitPrice.getText()),
                     Integer.parseInt(txtQtyOnHand.getText())
         ));
-
         if (isInserted) {
             System.out.println("Inserted successfully");
+            loadTable();
         }else{
             System.out.println("Insertion failed");
         }
@@ -78,6 +77,7 @@ public class ItemFormController implements Initializable {
         boolean isDeleted = deleteItem(txtItemCode.getText());
         if (isDeleted) {
             System.out.println("Deleted Successfully");
+            loadTable();
         }else{
             System.out.println("Deletion failed");
         }
@@ -105,6 +105,7 @@ public class ItemFormController implements Initializable {
         ));
         if (isUpdated) {
             System.out.println("Updated Successfully");
+            loadTable();
         }else{
             System.out.println("Update failed");
         }
@@ -115,9 +116,7 @@ public class ItemFormController implements Initializable {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             int res = statement.executeUpdate("DELETE FROM items WHERE itemCode = '" + itemCode + "'");
-
             return res > 0;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -133,9 +132,7 @@ public class ItemFormController implements Initializable {
             statement.setDouble(2, items.getUnitPrice());
             statement.setInt(3, items.getQtyOnHand());
             statement.setString(4, items.getItemCode());
-
             return statement.executeUpdate() > 0;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -149,7 +146,6 @@ public class ItemFormController implements Initializable {
             statement.setString(2, item.getDescription());
             statement.setDouble(3, item.getUnitPrice());
             statement.setInt(4, item.getQtyOnHand());
-
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -161,10 +157,8 @@ public class ItemFormController implements Initializable {
         try {
             connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-
             ResultSet res = statement.executeQuery("SELECT * FROM item WHERE code = '" + itemCode + "'");
             res.next();
-
             Item item = new Item(
                     res.getString(1),
                     res.getString(2),
@@ -182,9 +176,7 @@ public class ItemFormController implements Initializable {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-
             ResultSet res =  statement.executeQuery("SELECT * FROM item");
-
             while (res.next()) {
                 itemList.add(new Item(
                         res.getNString(1),
@@ -193,7 +185,6 @@ public class ItemFormController implements Initializable {
                         Integer.parseInt(res.getString(4))
                 ));
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

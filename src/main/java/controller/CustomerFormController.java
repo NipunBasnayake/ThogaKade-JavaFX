@@ -48,7 +48,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
-    List<Customer> customerList = new ArrayList<>();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,9 +78,8 @@ public class CustomerFormController implements Initializable {
                     Double.parseDouble(txtSalary.getText())
             );
 
-            customerList.add(customer);
-            loadTable();
             insertTODatabase(customer);
+            loadTable();
         }
     }
 
@@ -199,6 +198,7 @@ public class CustomerFormController implements Initializable {
     }
 
     private void loadTable() {
+        List<Customer> customerList = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();

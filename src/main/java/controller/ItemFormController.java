@@ -20,10 +20,6 @@ import java.util.ResourceBundle;
 
 public class ItemFormController implements Initializable {
 
-
-
-    List<Item> itemList = new ArrayList<>();
-
     @FXML
     private TableColumn colDescription;
 
@@ -80,11 +76,23 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         boolean isDeleted = deleteItem(txtItemCode.getText());
+        if (isDeleted) {
+            System.out.println("Deleted Successfully");
+        }else{
+            System.out.println("Deletion failed");
+        }
     }
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        searchByItemCode(txtItemCode.getText());
+        Item item = searchByItemCode(txtItemCode.getText());
+        if (item != null) {
+            txtDescription.setText(item.getDescription());
+            txtUnitPrice.setText(item.getUnitPrice().toString());
+            txtQtyOnHand.setText(String.valueOf(item.getQtyOnHand()));
+        }else {
+            System.out.println("Item not found");
+        }
     }
 
     @FXML
@@ -143,32 +151,34 @@ public class ItemFormController implements Initializable {
             statement.setInt(4, item.getQtyOnHand());
 
             return statement.executeUpdate() > 0;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    private void searchByItemCode(String itemCode) {
+    private Item searchByItemCode(String itemCode) {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
 
             ResultSet res = statement.executeQuery("SELECT * FROM item WHERE code = '" + itemCode + "'");
-
             res.next();
 
-            txtDescription.setText(res.getString(2));
-            txtUnitPrice.setText(res.getString(3));
-            txtQtyOnHand.setText(res.getString(4));
+            Item item = new Item(
+                    res.getString(1),
+                    res.getString(2),
+                    Double.parseDouble(res.getString(3)),
+                    Integer.parseInt(res.getString(4))
+            );
+            return item;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void loadTable() {
+        List<Item> itemList = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
@@ -187,7 +197,6 @@ public class ItemFormController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         ObservableList<Item> itemsObservableArray = FXCollections.observableArrayList();
         itemList.forEach(item -> {
             itemsObservableArray.add(item);

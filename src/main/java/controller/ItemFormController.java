@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,10 +66,14 @@ public class ItemFormController implements Initializable {
                     Integer.parseInt(txtQtyOnHand.getText())
         ));
         if (isInserted) {
-            System.out.println("Inserted successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Item Inserted");
+            alert.show();
             loadTable();
         }else{
-            System.out.println("Insertion failed");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Item Insertion Failed");
+            alert.show();
         }
     }
 
@@ -76,10 +81,14 @@ public class ItemFormController implements Initializable {
     void btnDeleteOnAction(ActionEvent event) {
         boolean isDeleted = deleteItem(txtItemCode.getText());
         if (isDeleted) {
-            System.out.println("Deleted Successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Item Deleted");
+            alert.show();
             loadTable();
         }else{
-            System.out.println("Deletion failed");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Item Deletion Failed");
+            alert.show();
         }
     }
 
@@ -91,7 +100,9 @@ public class ItemFormController implements Initializable {
             txtUnitPrice.setText(item.getUnitPrice().toString());
             txtQtyOnHand.setText(String.valueOf(item.getQtyOnHand()));
         }else {
-            System.out.println("Item not found");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Item Search Failed");
+            alert.show();
         }
     }
 
@@ -104,10 +115,14 @@ public class ItemFormController implements Initializable {
                 Integer.parseInt(txtQtyOnHand.getText())
         ));
         if (isUpdated) {
-            System.out.println("Updated Successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Item Updated");
+            alert.show();
             loadTable();
         }else{
-            System.out.println("Update failed");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Item Update Failed");
+            alert.show();
         }
     }
 

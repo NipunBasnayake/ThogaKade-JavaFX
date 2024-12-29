@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePageController">
    <children>
-      <JFXButton layoutX="154.0" layoutY="150.0" onAction="#btnCustomer" prefHeight="101.0" prefWidth="121.0" style="-fx-background-color: green;" text="Customer" textFill="WHITE">
+      <JFXButton layoutX="203.0" layoutY="117.0" onAction="#btnCustomer" prefHeight="72.0" prefWidth="195.0" style="-fx-background-color: green;" text=" Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView caretBias="false" glyphName="STAR" text="" />
+         </graphic>
       </JFXButton>
-      <JFXButton layoutX="326.0" layoutY="150.0" onAction="#btnItem" prefHeight="101.0" prefWidth="121.0" style="-fx-background-color: green;" text="Item" textFill="WHITE">
+      <JFXButton layoutX="203.0" layoutY="212.0" onAction="#btnItem" prefHeight="72.0" prefWidth="195.0" style="-fx-background-color: green;" text="Item" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>

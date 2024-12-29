@@ -109,7 +109,9 @@ public class CustomerFormController implements Initializable {
             txtAddress.setText(customer.getAddress());
             txtSalary.setText(customer.getSalary().toString());
         }else{
-            System.out.println("Customer not found");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Customer not found");
+            alert.show();
         }
     }
 
@@ -122,9 +124,14 @@ public class CustomerFormController implements Initializable {
                 Double.parseDouble(txtSalary.getText())
         ));
         if (isUpdated) {
-            System.out.println("Customer updated");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Customer updated");
+            alert.show();
+            loadTable();
         }else {
-            System.out.println("Customer not updated");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Customer not updated");
+            alert.show();
         }
     }
 

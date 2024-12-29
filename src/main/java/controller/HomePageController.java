@@ -20,9 +20,9 @@ public class HomePageController {
 
     @FXML
     void btnItem(ActionEvent event) throws IOException {
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/item-form.fxml"))));
-//        stage.show();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/item-form.fxml"))));
+        stage.show();
     }
 
 }

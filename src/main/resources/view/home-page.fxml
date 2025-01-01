@@ -12,7 +12,7 @@
             <Font name="System Bold" size="19.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView caretBias="false" glyphName="STAR" text="" />
+            <FontAwesomeIconView glyphName="%key.unspecified" size="25" text="" />
          </graphic>
       </JFXButton>
       <JFXButton layoutX="203.0" layoutY="212.0" onAction="#btnItem" prefHeight="72.0" prefWidth="195.0" style="-fx-background-color: green;" text="Item" textFill="WHITE">

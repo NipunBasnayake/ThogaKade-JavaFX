@@ -1,4 +1,4 @@
-package controller;
+package controller.item;
 
 import com.jfoenix.controls.JFXTextField;
 import db.DBConnection;

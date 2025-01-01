@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="489.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
+<AnchorPane prefHeight="489.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.item.ItemFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c3e50" height="65.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="755.0" />
       <Label layoutX="304.0" layoutY="9.0" text="Item Form" textFill="WHITE">

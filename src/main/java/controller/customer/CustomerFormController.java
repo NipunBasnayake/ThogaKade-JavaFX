@@ -60,7 +60,7 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-        if (txtID.getText().isEmpty() || txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtSalary.getText().isEmpty()) {
+        if (txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtSalary.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fields are empty");
             alert.setContentText("Please fill all the fields");
@@ -71,7 +71,8 @@ public class CustomerFormController implements Initializable {
                     txtID.getText(),
                     txtName.getText(),
                     txtAddress.getText(),
-                    Double.parseDouble(txtSalary.getText())))) {
+                    Double.parseDouble(txtSalary.getText()))))
+            {
                 loadTable();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -136,7 +137,6 @@ public class CustomerFormController implements Initializable {
             String newId = String.format("C%03d", num);
             return newId;
     }
-
 
     private void loadTable() {
         ObservableList<Customer> customerObservableArray = FXCollections.observableArrayList();

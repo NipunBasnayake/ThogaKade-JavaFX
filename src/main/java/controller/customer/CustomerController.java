@@ -56,9 +56,8 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public Customer searchCustomer(String id) {
-        ResultSet res = null;
         try {
-            res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer where id = '" + id + "'");
+            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer where id = '" + id + "'");
             res.next();
             return new Customer(
                     res.getString(1),

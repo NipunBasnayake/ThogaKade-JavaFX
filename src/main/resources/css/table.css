@@ -1,0 +1,95 @@
+/* Main Pane */
+#mainPane {
+    -fx-background-color: white;
+}
+
+/* Buttons */
+.btn {
+    -fx-background-color: #3867d6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
+}
+.btn:hover {
+    -fx-background-color: #004bb5;
+}
+.btn:pressed {
+    -fx-background-color: #003c9d;
+}
+
+/* Text Pane */
+.textPane {
+    -fx-background-color: white;
+    -fx-border-color: #c3c3c3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+}
+
+/* Text Fields */
+.textField {
+    -fx-background-color: white;
+    -fx-prompt-text-fill: #8a8a8a;
+    -fx-border-color: #c3c3c3;
+    -fx-border-radius: 5px;
+    -fx-padding: 6px;
+}
+.textField:focused {
+    -fx-border-color: #3867d6;
+}
+
+/* Labels */
+.textLabel {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4c4949;
+}
+
+/* Table View */
+.table-view {
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #c3c3c3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+.table-view:focused {
+    -fx-background-insets: 0px;
+}
+.table-view .column-header {
+    -fx-background-color: #3867d6;
+    -fx-size: 40px;
+}
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.table-view .table-row-cell:empty {
+    -fx-background-color: white;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: linear-gradient(to right, rgba(56, 103, 214, 0.3), rgba(56, 103, 214, 0.5));
+}
+.table-view .table-row-cell:selected * {
+    -fx-font-weight: bold;
+    -fx-text-fill: #363131;
+}
+
+/* Action Icons */
+.actionIcon {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+.actionIcon:hover {
+    -fx-opacity: 0.8;
+}
+
+/* Dashboard Colour */
+.dashboard-colour2 {
+    -fx-background-color: linear-gradient(to bottom left, #3867d6, #73a1f9);
+}

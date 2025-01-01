@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -9,61 +10,65 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="605.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.CustomerFormController">
+<AnchorPane prefHeight="592.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.CustomerFormController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c3e50" height="97.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="964.0" />
-      <Label layoutX="352.0" layoutY="21.0" text="Customer Form" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="615.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="971.0" />
+      <Label layoutX="33.0" layoutY="26.0" text="Customer Management" textFill="#3867d6">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtID" focusColor="#2c3e50" layoutX="39.0" layoutY="142.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Id">
+      <JFXTextField fx:id="txtID" focusColor="#3867d6" layoutX="37.0" layoutY="120.0" prefHeight="35.0" prefWidth="328.0" promptText="Customer Id" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtName" focusColor="#2c3e50" layoutX="37.0" layoutY="217.0" prefHeight="30.0" prefWidth="328.0" promptText="Name">
+      <JFXTextField fx:id="txtName" focusColor="#3867d6" layoutX="37.0" layoutY="205.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Name" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtAddress" focusColor="#2c3e50" layoutX="37.0" layoutY="294.0" prefHeight="30.0" prefWidth="328.0" promptText="Address">
+      <JFXTextField fx:id="txtAddress" focusColor="#3867d6" layoutX="37.0" layoutY="292.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Address" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtSalary" focusColor="#2c3e50" layoutX="37.0" layoutY="371.0" prefHeight="30.0" prefWidth="328.0" promptText="Salary">
+      <JFXTextField fx:id="txtSalary" focusColor="#3867d6" layoutX="37.0" layoutY="376.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Salary" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="37.0" layoutY="460.0" onAction="#btnAddOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #2ecc71;" text="Add" textFill="WHITE">
+      <JFXButton layoutX="36.0" layoutY="477.0" onAction="#btnAddOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@../css/button.css" text="Add Customer" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="213.0" layoutY="460.0" onAction="#btnSearchOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #3498db;" text="Search" textFill="WHITE">
+      <JFXButton layoutX="212.0" layoutY="477.0" onAction="#btnSearchOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #3498db;" styleClass="edge-button" stylesheets="@../css/button.css" text="Search Customer" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="39.0" layoutY="521.0" onAction="#btnUpdateOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #f1c40f;" text="Update" textFill="WHITE">
+      <JFXButton layoutX="39.0" layoutY="536.0" onAction="#btnUpdateOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #f1c40f;" styleClass="edge-button" stylesheets="@../css/button.css" text="Update Customer" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="213.0" layoutY="521.0" onAction="#btnDeleteOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE">
+      <JFXButton layoutX="213.0" layoutY="536.0" onAction="#btnDeleteOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #e74c3c;" styleClass="edge-button" stylesheets="@../css/button.css" text="Delete Customer" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblCustomer" layoutX="410.0" layoutY="128.0" prefHeight="447.0" prefWidth="523.0">
+      <TableView fx:id="tblCustomer" layoutX="402.0" layoutY="35.0" prefHeight="540.0" prefWidth="536.0" stylesheets="@../css/table.css">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="105.0" text="ID" />
-          <TableColumn fx:id="colName" prefWidth="182.0" text="Name" />
-            <TableColumn fx:id="colAddress" prefWidth="140.0" text="Address" />
-            <TableColumn fx:id="colSalary" prefWidth="106.0" text="Salary" />
+          <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
+          <TableColumn fx:id="colName" prefWidth="161.0" text="Name" />
+            <TableColumn fx:id="colAddress" prefWidth="161.0" text="Address" />
+            <TableColumn fx:id="colSalary" prefWidth="99.0" text="Salary" />
         </columns>
+         <styleClass>
+            <String fx:value="table-view" />
+            <String fx:value="table-row-cell" />
+         </styleClass>
       </TableView>
    </children>
 </AnchorPane>

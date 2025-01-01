@@ -1,0 +1,27 @@
+/*.edge-button {*/
+/*    !*-fx-border-color: #0652DD;*!*/
+/*    !*-fx-border-width: 2px;*!*/
+/*    -fx-border-radius: 5px;*/
+/*    -fx-background-radius: 10px;*/
+/*    -fx-font-weight: bold;*/
+/*    !*-fx-text-fill: #0652DD;*!*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-cursor: hand;*/
+/*    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0.3, 0, 2);*/
+/*    -fx-transition: transform 0.2s ease, -fx-effect 0.2s ease;*/
+/*}*/
+
+.edge-button {
+    -fx-border-radius-color:#0652DD;
+    -fx-background-radius: 8px;
+}
+
+/*.edge-button:hover {*/
+/*    -fx-transform: scale(1.1);*/
+/*    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.5, 0, 3);*/
+/*}*/
+
+/*.edge-button:pressed {*/
+/*    -fx-transform: scale(1.0);*/
+/*    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0.4, 0, 1);*/
+/*}*/

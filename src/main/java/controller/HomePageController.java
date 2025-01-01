@@ -15,6 +15,7 @@ public class HomePageController {
     void btnCustomer(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/customer-form.fxml"))));
+        stage.setTitle("Customer Management");
         stage.show();
     }
 
@@ -22,6 +23,7 @@ public class HomePageController {
     void btnItem(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/item-form.fxml"))));
+        stage.setTitle("Item Management");
         stage.show();
     }
 

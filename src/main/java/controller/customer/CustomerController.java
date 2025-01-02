@@ -18,7 +18,7 @@ public class CustomerController implements CustomerServices {
     public boolean addCustomer(Customer customer) {
         PreparedStatement statement = null;
         try {
-            statement = DBConnection.getInstance().getConnection().prepareStatement("insert into customer values(?,?,?,?)");
+            statement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
             statement.setString(1, customer.getId());
             statement.setString(2, customer.getName());
             statement.setString(3, customer.getAddress());
@@ -27,14 +27,13 @@ public class CustomerController implements CustomerServices {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public boolean updateCustomer(Customer customer) {
         PreparedStatement statement = null;
         try {
-            statement = DBConnection.getInstance().getConnection().prepareStatement("update customer set name=?,address=?,salary=? where id=?");
+            statement = DBConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET name=?,address=?,salary=? WHERE id=?");
             statement.setString(1, customer.getName());
             statement.setString(2, customer.getAddress());
             statement.setDouble(3, customer.getSalary());
@@ -57,7 +56,7 @@ public class CustomerController implements CustomerServices {
     @Override
     public Customer searchCustomer(String id) {
         try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer where id = '" + id + "'");
+            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer WHERE id = '" + id + "'");
             res.next();
             return new Customer(
                     res.getString(1),
@@ -94,12 +93,11 @@ public class CustomerController implements CustomerServices {
     public String getLastId() {
         ResultSet res = null;
         try {
-            res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id from customer ORDER BY id DESC LIMIT 1");
+            res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM customer ORDER BY id DESC LIMIT 1");
             res.next();
             return res.getString(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

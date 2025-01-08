@@ -88,9 +88,8 @@ public class ItemController implements ItemServices {
 
     @Override
     public String getLastId() {
-        ResultSet res = null;
         try {
-            res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT code from item ORDER BY code DESC LIMIT 1");
+            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT code from item ORDER BY code DESC LIMIT 1");
             res.next();
             return res.getString(1);
         } catch (SQLException e) {

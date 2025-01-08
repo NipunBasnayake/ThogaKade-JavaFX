@@ -1,5 +1,6 @@
 package controller.palceorder;
 
+import controller.item.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,10 +19,12 @@ import java.util.ResourceBundle;
 public class PlaceOrderFormController implements Initializable {
     public Label lblDate;
     public Label lblTime;
+    public Label lblOrderId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDateAdnTime();
+        generateOrderId();
     }
 
     private void loadDateAdnTime() {
@@ -39,6 +42,13 @@ public class PlaceOrderFormController implements Initializable {
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    private void generateOrderId() {
+        int num = Integer.parseInt(PlaceOrderController.getInstance().getLastOrderID().substring(1));
+        num++;
+        String newId = String.format("D%03d", num);
+        lblOrderId.setText(newId);
     }
 
     public void btnAddOnAction(ActionEvent actionEvent) {

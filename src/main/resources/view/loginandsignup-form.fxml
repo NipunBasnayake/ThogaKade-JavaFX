@@ -70,22 +70,22 @@
       </AnchorPane>
       <AnchorPane fx:id="loginPane" layoutX="312.0" prefHeight="496.0" prefWidth="448.0" style="-fx-background-color: white;">
          <children>
-            <Label layoutX="79.0" layoutY="114.0" text="LOGIN">
+            <Label layoutX="79.0" layoutY="108.0" text="LOGIN">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="txtEmail" focusColor="DODGERBLUE" layoutX="80.0" layoutY="180.0" prefHeight="36.0" prefWidth="290.0" promptText="Email" unFocusColor="DODGERBLUE">
+            <JFXTextField fx:id="txtEmail" focusColor="DODGERBLUE" layoutX="80.0" layoutY="186.0" prefHeight="36.0" prefWidth="290.0" promptText="Email" unFocusColor="DODGERBLUE">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="80.0" layoutY="238.0" prefHeight="36.0" prefWidth="290.0" promptText="Password" unFocusColor="DODGERBLUE">
+            <JFXPasswordField fx:id="txtPasswordlogin" focusColor="DODGERBLUE" layoutX="79.0" layoutY="244.0" prefHeight="36.0" prefWidth="290.0" promptText="Password" unFocusColor="DODGERBLUE">
                <font>
                   <Font size="14.0" />
                </font>
-            </JFXTextField>
-            <JFXButton layoutX="79.0" layoutY="310.0" onAction="#btnLoginOnAction" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #1e90ff;" text=" LOGIN" textFill="WHITE">
+            </JFXPasswordField>
+            <JFXButton layoutX="79.0" layoutY="316.0" onAction="#btnLoginOnAction" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #1e90ff;" text=" LOGIN" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -97,14 +97,19 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <Label layoutX="79.0" layoutY="367.0" text="Don't have an account?" textFill="#2c3e50">
+            <Label layoutX="79.0" layoutY="373.0" text="Don't have an account?" textFill="#2c3e50">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="234.0" layoutY="367.0" onMousePressed="#signUpOnMousePressed" text="Sign up now!" textFill="#0080ff">
+            <Label layoutX="234.0" layoutY="373.0" onMousePressed="#signUpOnMousePressed" text="Sign up now!" textFill="#0080ff">
                <font>
                   <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="147.0" text="Welcome Back to ThogaKade" textFill="#2c3e50">
+               <font>
+                  <Font name="Arial" size="14.0" />
                </font>
             </Label>
          </children>

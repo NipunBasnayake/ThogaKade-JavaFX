@@ -17,6 +17,7 @@ import org.jasypt.util.text.BasicTextEncryptor;
 import java.io.IOException;
 
 public class LoginSignupFormController {
+    public JFXPasswordField txtPasswordlogin;
     @FXML
     private JFXTextField txtUserNameSignup;
 
@@ -39,9 +40,6 @@ public class LoginSignupFormController {
     private JFXTextField txtEmail;
 
     @FXML
-    private JFXTextField txtPassword;
-
-    @FXML
     private JFXPasswordField txtPasswordConfirm;
 
     @FXML
@@ -62,6 +60,10 @@ public class LoginSignupFormController {
 
                     if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), basicTextEncryptor.encrypt(txtPasswordSignup.getText())))){
                         loadDashBoard();
+                        Stage currentStage = (Stage) txtEmailSignup.getScene().getWindow();
+                        if (currentStage != null) {
+                            currentStage.close();
+                        }
                     }else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error - Incorrect Password");
@@ -86,14 +88,19 @@ public class LoginSignupFormController {
 
     @FXML
     void btnLoginOnAction(ActionEvent event) throws IOException {
-        if (txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+        if (txtEmail.getText().isEmpty() || txtPasswordlogin.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error - Empty Fields");
             alert.setHeaderText("Fields cannot be empty");
             alert.show();
         } else {
-            if (LoginSignupController.getInstance().login(txtEmail.getText(), txtPassword.getText())) {
+            if (LoginSignupController.getInstance().login(txtEmail.getText(), txtPasswordlogin.getText())) {
                 loadDashBoard();
+                Stage currentStage = (Stage) txtEmail.getScene().getWindow();
+                if (currentStage != null) {
+                    currentStage.close();
+                }
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");

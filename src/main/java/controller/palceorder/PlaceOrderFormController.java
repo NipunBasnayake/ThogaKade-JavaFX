@@ -14,7 +14,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.SimpleTimeZone;
 
 public class PlaceOrderFormController implements Initializable {
     public Label lblDate;

@@ -24,21 +24,21 @@ public class DashboardController {
     @FXML
     public Tab itemPane;
 
-    public void placeOrderOnSelectionChanged(Event event) throws IOException {
+    public void placeOrderOnSelectionChanged() throws IOException {
         URL resource = this.getClass().getResource("/view/placeorder-form.fxml");
         assert resource != null;
         Parent load = FXMLLoader.load(resource);
         this.placeOrderPane.setContent(load);
     }
 
-    public void customerOnSelectionChanged(Event event) throws IOException {
+    public void customerOnSelectionChanged() throws IOException {
         URL resource = this.getClass().getResource("/view/customer-form.fxml");
         assert resource != null;
         Parent load = FXMLLoader.load(resource);
         this.customerPane.setContent(load);
     }
 
-    public void itemOnSelectionChanged(Event event) throws IOException {
+    public void itemOnSelectionChanged() throws IOException {
         URL resource = this.getClass().getResource("/view/item-form.fxml");
         assert resource != null;
         Parent load = FXMLLoader.load(resource);

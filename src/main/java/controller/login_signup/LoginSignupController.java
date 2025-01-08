@@ -27,6 +27,14 @@ public class LoginSignupController implements LoginSignupServices{
         }
     }
 
+    public boolean checkUser(String email) {
+        try {
+            return DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM users WHERE email ='" + email + "'").next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public boolean login(String email, String password) {
         try {

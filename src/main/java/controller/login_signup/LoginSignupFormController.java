@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.User;
+import animatefx.animation.*;
+
 
 import java.io.IOException;
 
@@ -54,14 +56,22 @@ public class LoginSignupFormController {
             alert.setHeaderText("Fields cannot be empty");
         }else{
             if (txtPasswordSignup.getText().equals(txtPasswordConfirmSignup.getText())) {
-                if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), txtPasswordSignup.getText()))){
-                    loadDashBoard();
+                if (!LoginSignupController.getInstance().checkUser(txtEmailSignup.getText())) {
+                    if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), txtPasswordSignup.getText()))){
+                        loadDashBoard();
+                    }else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error - Incorrect Password");
+                        alert.setHeaderText("User not added");
+                        alert.show();
+                    }
                 }else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error - Incorrect Password");
-                    alert.setHeaderText("User not added");
+                    alert.setTitle("Error - User already exists");
+                    alert.setHeaderText("User already exists");
                     alert.show();
                 }
+
             }else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error - Incorrect Password");
@@ -99,11 +109,13 @@ public class LoginSignupFormController {
 
     @FXML
     void loginOnMousePressed(MouseEvent event) {
+        new SlideInRight(loginPane).play();
         loginPane.toFront();
     }
 
     @FXML
     void signUpOnMousePressed(MouseEvent event) {
+        new  SlideInRight(signupPane).play();
         signupPane.toFront();
     }
 

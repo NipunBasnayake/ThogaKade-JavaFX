@@ -12,58 +12,58 @@
 
 <AnchorPane prefHeight="607.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.CustomerFormController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="608.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="908.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="Customer Management" textFill="#3867d6">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="607.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="960.0" />
+      <Label layoutX="33.0" layoutY="26.0" text="Customer Management" textFill="#3867d6">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtID" focusColor="#3867d6" layoutX="18.0" layoutY="108.0" prefHeight="35.0" prefWidth="328.0" promptText="Customer Id" unFocusColor="#3867d6">
+      <JFXTextField fx:id="txtID" focusColor="#3867d6" layoutX="37.0" layoutY="120.0" prefHeight="35.0" prefWidth="328.0" promptText="Customer Id" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtName" focusColor="#3867d6" layoutX="18.0" layoutY="193.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Name" unFocusColor="#3867d6">
+      <JFXTextField fx:id="txtName" focusColor="#3867d6" layoutX="37.0" layoutY="205.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Name" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtAddress" focusColor="#3867d6" layoutX="18.0" layoutY="280.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Address" unFocusColor="#3867d6">
+      <JFXTextField fx:id="txtAddress" focusColor="#3867d6" layoutX="37.0" layoutY="292.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Address" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtSalary" focusColor="#3867d6" layoutX="18.0" layoutY="364.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Salary" unFocusColor="#3867d6">
+      <JFXTextField fx:id="txtSalary" focusColor="#3867d6" layoutX="37.0" layoutY="376.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Salary" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="17.0" layoutY="465.0" onAction="#btnAddOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@../css/button.css" text="Add Customer" textFill="WHITE">
+      <JFXButton layoutX="36.0" layoutY="477.0" onAction="#btnAddOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@../css/button.css" text="Add Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="193.0" layoutY="465.0" onAction="#btnSearchOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #3498db;" styleClass="edge-button" stylesheets="@../css/button.css" text="Search Customer" textFill="WHITE">
+      <JFXButton layoutX="212.0" layoutY="477.0" onAction="#btnSearchOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #3498db;" styleClass="edge-button" stylesheets="@../css/button.css" text="Search Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="20.0" layoutY="524.0" onAction="#btnUpdateOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #f1c40f;" styleClass="edge-button" stylesheets="@../css/button.css" text="Update Customer" textFill="WHITE">
+      <JFXButton layoutX="39.0" layoutY="536.0" onAction="#btnUpdateOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #f1c40f;" styleClass="edge-button" stylesheets="@../css/button.css" text="Update Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="194.0" layoutY="524.0" onAction="#btnDeleteOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #e74c3c;" styleClass="edge-button" stylesheets="@../css/button.css" text="Delete Customer" textFill="WHITE">
+      <JFXButton layoutX="213.0" layoutY="536.0" onAction="#btnDeleteOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #e74c3c;" styleClass="edge-button" stylesheets="@../css/button.css" text="Delete Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblCustomer" layoutX="383.0" layoutY="23.0" prefHeight="540.0" prefWidth="507.0" stylesheets="@../css/table.css">
+      <TableView fx:id="tblCustomer" layoutX="402.0" layoutY="35.0" prefHeight="540.0" prefWidth="537.0" stylesheets="@../css/table.css">
         <columns>
           <TableColumn fx:id="colId" prefWidth="63.0" text="ID" />
-          <TableColumn fx:id="colName" prefWidth="140.0" text="Name" />
-            <TableColumn fx:id="colAddress" prefWidth="187.0" text="Address" />
-            <TableColumn fx:id="colSalary" prefWidth="104.0" text="Salary" />
+          <TableColumn fx:id="colName" prefWidth="169.0" text="Name" />
+            <TableColumn fx:id="colAddress" prefWidth="183.0" text="Address" />
+            <TableColumn fx:id="colSalary" prefWidth="109.0" text="Salary" />
         </columns>
          <styleClass>
             <String fx:value="table-view" />

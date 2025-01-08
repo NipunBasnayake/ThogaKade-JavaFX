@@ -7,7 +7,6 @@
     -fx-padding: 8px 12px;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-text-fill: black; /* Default text color */
 }
 
 .tab:hover {
@@ -15,12 +14,19 @@
 }
 
 .tab:selected {
-    -fx-background-color: #1e90ff;
+    -fx-background-color: #0060bd;
     -fx-border-color: #004a99;
     -fx-border-width: 0 0 3px 0;
-    -fx-text-fill: white; /* White text for the selected tab */
+}
+
+.tab .tab-label {
+    -fx-text-fill: black; /* Default text color for unselected tabs */
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: white; /* Text color for selected tab */
 }
 
 .tab-header-background {
-    -fx-background-color: #0056b3;
+    -fx-background-color: #003063;
 }

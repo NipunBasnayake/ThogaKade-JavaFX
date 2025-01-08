@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="614.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dashbord.DashboardController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="615.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="971.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="614.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="196.0" />
+      <JFXButton layoutX="20.0" layoutY="224.0" onAction="#CustomerFormOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: white;" text="Customer Form">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="20.0" layoutY="288.0" onAction="#ItemFormOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: white;" text="Item Form">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="20.0" layoutY="351.0" onAction="#OrderFormOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: white;" text="Order Form">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+      <AnchorPane fx:id="dashboardPane" layoutX="201.0" layoutY="8.0" prefHeight="599.0" prefWidth="894.0" style="-fx-background-color: white;" />
+   </children>
+</AnchorPane>

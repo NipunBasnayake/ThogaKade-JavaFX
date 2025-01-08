@@ -10,14 +10,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.Data;
+import lombok.Getter;
 import model.User;
 import animatefx.animation.*;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 
 import java.io.IOException;
 
-public class LoginSignupFormController {
 
+public class LoginSignupFormController {
     @FXML
     private JFXTextField txtUserNameSignup;
 
@@ -57,7 +60,10 @@ public class LoginSignupFormController {
         }else{
             if (txtPasswordSignup.getText().equals(txtPasswordConfirmSignup.getText())) {
                 if (!LoginSignupController.getInstance().checkUser(txtEmailSignup.getText())) {
-                    if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), txtPasswordSignup.getText()))){
+                    BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
+                    basicTextEncryptor.setPassword(LoginSignupController.getInstance().getKey());
+
+                    if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), basicTextEncryptor.encrypt(txtPasswordSignup.getText())))){
                         loadDashBoard();
                     }else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);

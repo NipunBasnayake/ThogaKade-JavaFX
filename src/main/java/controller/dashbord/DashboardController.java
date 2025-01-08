@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DashboardController implements Initializable {
+public class DashboardController {
     @FXML
     public TabPane tabPane;
     @FXML
@@ -23,14 +23,6 @@ public class DashboardController implements Initializable {
     public Tab customerPane;
     @FXML
     public Tab itemPane;
-
-    @FXML
-    private AnchorPane dashboardPane;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     public void placeOrderOnSelectionChanged(Event event) {
 

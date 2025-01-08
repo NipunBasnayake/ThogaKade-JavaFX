@@ -1,7 +1,6 @@
 package controller.login_signup;
 
 import db.DBConnection;
-import lombok.Getter;
 import model.User;
 import org.jasypt.util.text.BasicTextEncryptor;
 
@@ -11,12 +10,7 @@ import java.sql.SQLException;
 
 public class LoginSignupController implements LoginSignupServices{
 
-    private final static String key = "@bCd3f";
     private static LoginSignupServices loginSignupServices;
-
-    public String getKey() {
-        return key;
-    }
 
     public static LoginSignupServices getInstance() {
         return loginSignupServices==null?loginSignupServices=new LoginSignupController():loginSignupServices;
@@ -49,6 +43,7 @@ public class LoginSignupController implements LoginSignupServices{
             ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM users WHERE email ='" + email + "'");
             if (resultSet.next()) {
                 BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
+                String key = "@bCd3f";
                 basicTextEncryptor.setPassword(key);
 
                 if (basicTextEncryptor.decrypt(resultSet.getString("password")).equals(password)) {

@@ -24,8 +24,11 @@ public class DashboardController {
     @FXML
     public Tab itemPane;
 
-    public void placeOrderOnSelectionChanged(Event event) {
-
+    public void placeOrderOnSelectionChanged(Event event) throws IOException {
+        URL resource = this.getClass().getResource("/view/placeorder-form.fxml");
+        assert resource != null;
+        Parent load = FXMLLoader.load(resource);
+        this.placeOrderPane.setContent(load);
     }
 
     public void customerOnSelectionChanged(Event event) throws IOException {

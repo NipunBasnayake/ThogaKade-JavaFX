@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="592.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.palceorder.PlaceOrrderFormController">
+<AnchorPane prefHeight="592.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.palceorder.PlaceOrderFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="615.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="971.0" />
-      <Label layoutX="33.0" layoutY="26.0" text="Item Management" textFill="#3867d6">
+      <Label layoutX="33.0" layoutY="26.0" text="Place Order" textFill="#3867d6">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtItemCode" focusColor="#3867d6" layoutX="37.0" layoutY="120.0" prefHeight="35.0" prefWidth="328.0" promptText="Item Code" unFocusColor="#3867d6">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="txtDescription" focusColor="#3867d6" layoutX="37.0" layoutY="205.0" prefHeight="30.0" prefWidth="328.0" promptText="Item Description" unFocusColor="#3867d6">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </JFXTextField>
       <JFXTextField fx:id="txtUnitPrice" focusColor="#3867d6" layoutX="37.0" layoutY="292.0" prefHeight="30.0" prefWidth="328.0" promptText="Unit Price" unFocusColor="#3867d6">
          <font>
             <Font size="16.0" />
@@ -58,17 +46,27 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblItem" layoutX="402.0" layoutY="35.0" prefHeight="540.0" prefWidth="536.0" stylesheets="@../css/table.css">
-        <columns>
-          <TableColumn fx:id="colItemCode" prefWidth="85.0" text="Item Code" />
-          <TableColumn fx:id="colDescription" prefWidth="228.0" text="Description" />
-            <TableColumn fx:id="colUnitPrice" prefWidth="109.0" text="Unit Price" />
-            <TableColumn fx:id="colQtyOnHand" prefWidth="99.0" text="Qty On Hand" />
-        </columns>
-         <styleClass>
-            <String fx:value="table-view" />
-            <String fx:value="table-row-cell" />
-         </styleClass>
-      </TableView>
+      <Label layoutX="805.0" layoutY="27.0" text="Date :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="851.0" layoutY="27.0" text="YYYY-MM-DD">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="805.0" layoutY="50.0" text="Time :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="855.0" layoutY="50.0" text="00:00:00">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXComboBox layoutX="39.0" layoutY="117.0" prefHeight="35.0" prefWidth="184.0" promptText="Customer Id" />
+      <JFXTextField layoutX="256.0" layoutY="117.0" prefHeight="35.0" prefWidth="135.0" promptText="Address" />
    </children>
 </AnchorPane>

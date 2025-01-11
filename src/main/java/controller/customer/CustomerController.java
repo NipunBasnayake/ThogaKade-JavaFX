@@ -100,4 +100,18 @@ public class CustomerController implements CustomerServices {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<String> getCustomerIDs() {
+        try {
+            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM customer");
+            List<String> customerIDs = new ArrayList<>();
+            while (resultSet.next()) {
+                customerIDs.add(resultSet.getString(1));
+            }
+            return customerIDs;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface CustomerServices {
     Customer searchCustomer(String id);
     List<Customer> getCustomers();
     String getLastId();
+    List<String> getCustomerIDs();
 }

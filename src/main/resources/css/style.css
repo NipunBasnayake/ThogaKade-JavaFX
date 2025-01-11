@@ -30,3 +30,14 @@
 .tab-header-background {
     -fx-background-color: #ffffff;
 }
+
+.jfx-combobox {
+    -fx-padding: 3px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.jfx-combobox .combo-box-arrow {
+    -fx-background-color: #42b2ff;
+}
+

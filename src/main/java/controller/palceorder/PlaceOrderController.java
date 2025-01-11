@@ -1,7 +1,9 @@
 package controller.palceorder;
 
+import controller.order_detail.OrderDetailController;
 import db.DBConnection;
 import model.Order;
+import model.OrderDetail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,21 +30,24 @@ public class PlaceOrderController implements PlaceOrderServices{
         }
     }
 
+
+
     @Override
-    public boolean placeOrder(Order order) {
+    public boolean placeOrder(OrderDetail orderDetail) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement("INSERT INTO orders VALUES (?,?,?)");
             boolean isOrderAdded = statement.executeUpdate() > 0;
             if (isOrderAdded) {
-                boolean idOrderDetailsAdded =
+                boolean isOrderDetailsAdded = OrderDetailController.getInstance().addOrderDetail();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return false;
     }
+
 
 
 }

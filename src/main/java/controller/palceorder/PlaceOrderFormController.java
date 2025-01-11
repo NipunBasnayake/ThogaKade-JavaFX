@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import model.CartItem;
 import model.Item;
 import model.Order;
+import model.OrderDetail;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -201,8 +202,6 @@ public class PlaceOrderFormController implements Initializable {
 
         }
     }
-
-
 
 
 }

@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.CartItem;
 import model.Item;
+import model.Order;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -103,7 +105,21 @@ public class PlaceOrderFormController implements Initializable {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
-
+        if (PlaceOrderController.getInstance().placeOrder(new Order(
+                lblOrderId.getText(),
+                lblDate.getText(),
+                cmbCustomerId.getSelectionModel().getSelectedItem().toString()
+        ))){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Order Placed Successfully");
+            alert.show();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to Place Order");
+            alert.show();
+        }
     }
 
     @FXML

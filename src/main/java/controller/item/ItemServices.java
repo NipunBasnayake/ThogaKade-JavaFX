@@ -11,4 +11,5 @@ public interface ItemServices {
     Item searchItem(String id);
     List<Item> getItems();
     String getLastId();
+    List<String> getItemCodes();
 }

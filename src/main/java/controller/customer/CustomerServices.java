@@ -12,4 +12,5 @@ public interface CustomerServices {
     List<Customer> getCustomers();
     String getLastId();
     List<String> getCustomerIDs();
+    String getCustomerName(String id);
 }

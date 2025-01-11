@@ -39,7 +39,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <JFXComboBox fx:id="cmbCustomerId" focusColor="#3867d6" layoutX="179.0" layoutY="94.0" prefHeight="27.0" prefWidth="100.0" promptText="Customer Id" unFocusColor="#3867d6" />
+      <JFXComboBox fx:id="cmbCustomerId" focusColor="#3498db" layoutX="169.0" layoutY="90.0" onAction="#cmbCustomerIdOnAction" prefHeight="35.0" prefWidth="110.0" promptText="Customer Id" unFocusColor="#3498db" />
       <Label layoutX="478.0" layoutY="35.0" text="Order ID :">
          <font>
             <Font size="18.0" />
@@ -60,7 +60,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblCustomerName" layoutX="179.0" layoutY="143.0" text="Nipun">
+      <Label fx:id="lblCustomerName" layoutX="179.0" layoutY="143.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -76,13 +76,13 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="cmbItemCode" focusColor="#3867d6" layoutX="146.0" layoutY="275.0" prefHeight="27.0" prefWidth="131.0" promptText="Item Code" unFocusColor="#3867d6" />
+      <JFXComboBox fx:id="cmbItemCode" focusColor="#3498db" layoutX="146.0" layoutY="271.0" onAction="#cmbItemCodeOnAction" prefHeight="35.0" prefWidth="131.0" promptText="Item Code" unFocusColor="#3498db" />
       <Label layoutX="32.0" layoutY="328.0" text="Description  :">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescription" layoutX="144.0" layoutY="328.0" text="Description">
+      <Label fx:id="lblDescription" layoutX="144.0" layoutY="328.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -97,7 +97,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblUnitPrice" layoutX="144.0" layoutY="377.0" text="UnitPrice">
+      <Label fx:id="lblUnitPrice" layoutX="144.0" layoutY="377.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -107,7 +107,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblQyantityOnHand" layoutX="145.0" layoutY="426.0" text="Qty OnHand">
+      <Label fx:id="lblQyantityOnHand" layoutX="145.0" layoutY="426.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -117,9 +117,9 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtQty" layoutX="145.0" layoutY="476.0" prefHeight="35.0" prefWidth="131.0">
+      <JFXTextField fx:id="txtQty" focusColor="#3498db" layoutX="146.0" layoutY="471.0" prefHeight="35.0" prefWidth="131.0" unFocusColor="#3498db">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </JFXTextField>
       <JFXButton layoutX="31.0" layoutY="536.0" onAction="#btnAddtoCartOnAction" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #f1c40f;" styleClass="edge-button" stylesheets="@../css/button.css" text="Add to Cart" textFill="WHITE">
@@ -127,21 +127,21 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblCart" layoutX="321.0" layoutY="86.0" prefHeight="430.0" prefWidth="619.0" stylesheets="@../css/table.css">
+      <TableView fx:id="tblCart" layoutX="348.0" layoutY="86.0" prefHeight="430.0" prefWidth="592.0" stylesheets="@../css/table.css">
         <columns>
           <TableColumn fx:id="colItemCode" prefWidth="84.0" text="Item Code" />
           <TableColumn fx:id="colDescription" prefWidth="250.0" text="Description" />
             <TableColumn fx:id="colQty" prefWidth="57.0" text="Qty" />
-            <TableColumn fx:id="ColUnitPrice" prefWidth="110.0" text="Unit Price" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="110.0" text="Unit Price" />
             <TableColumn fx:id="colTotal" prefWidth="106.0" text="Total" />
         </columns>
       </TableView>
-      <Label layoutX="321.0" layoutY="541.0" text="Total :" textFill="#6f6f6f">
+      <Label layoutX="348.0" layoutY="541.0" text="Total :" textFill="#6f6f6f">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotal" layoutX="398.0" layoutY="541.0" text="1000.00" textFill="#3498db">
+      <Label fx:id="lblTotal" layoutX="425.0" layoutY="541.0" text="1000.00" textFill="#3498db">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

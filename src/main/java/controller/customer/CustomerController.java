@@ -114,4 +114,19 @@ public class CustomerController implements CustomerServices {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String getCustomerName(String id) {
+        try {
+            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT name FROM customer WHERE id = '" + id + "'");
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

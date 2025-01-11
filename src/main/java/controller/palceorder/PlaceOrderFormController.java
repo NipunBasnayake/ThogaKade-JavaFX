@@ -3,6 +3,7 @@ package controller.palceorder;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import controller.customer.CustomerController;
+import controller.item.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +18,12 @@ import javafx.scene.control.TableView;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import javafx. util. Duration;
+
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
+import model.CartItem;
+import model.Item;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -27,7 +33,7 @@ import java.util.ResourceBundle;
 public class PlaceOrderFormController implements Initializable {
 
     @FXML
-    private TableColumn ColUnitPrice;
+    public TableColumn colUnitPrice;
 
     @FXML
     private JFXComboBox cmbCustomerId;
@@ -72,19 +78,27 @@ public class PlaceOrderFormController implements Initializable {
     private Label lblUnitPrice;
 
     @FXML
-    private TableView<?> tblCart;
+    private TableView tblCart;
 
     @FXML
     private JFXTextField txtQty;
 
+    ObservableList<CartItem> itemsObservableArray = FXCollections.observableArrayList();
+
     @FXML
     void btnAddtoCartOnAction(ActionEvent event) {
-
+        itemsObservableArray.add(new CartItem(
+                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                lblDescription.getText(),
+                Integer.parseInt(txtQty.getText()),
+                Double.parseDouble(lblUnitPrice.getText())
+        ));
+        tblCart.setItems(itemsObservableArray);
     }
 
     @FXML
     void btnNewCustomerOnAction(ActionEvent event) {
-
+        System.out.println("btnNewCustomerOnAction");
     }
 
     @FXML
@@ -92,11 +106,28 @@ public class PlaceOrderFormController implements Initializable {
 
     }
 
+    @FXML
+    public void cmbCustomerIdOnAction(ActionEvent actionEvent) {
+        getCustomerName();
+    }
+
+    @FXML
+    public void cmbItemCodeOnAction(ActionEvent actionEvent) {
+        setItemDetails();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+
         loadDateAdnTime();
         generateOrderId();
         loadCustomerId();
+        loadItemCodes();
     }
 
     private void loadDateAdnTime() {
@@ -131,6 +162,31 @@ public class PlaceOrderFormController implements Initializable {
         });
         cmbCustomerId.setItems(ids);
     }
+
+    private void getCustomerName() {
+        String customerName = CustomerController.getInstance().getCustomerName(cmbCustomerId.getValue().toString());
+        if (customerName != null) {
+            lblCustomerName.setText(customerName);
+        }
+    }
+
+    private void loadItemCodes() {
+        ObservableList<String> itemIDs = FXCollections.observableArrayList(ItemController.getInstance().getItemCodes());
+        cmbItemCode.setItems(itemIDs);
+    }
+
+    private void setItemDetails() {
+        Item item = ItemController.getInstance().searchItem(cmbItemCode.getValue().toString());
+        if (item != null) {
+            lblDescription.setText(item.getDescription());
+            lblUnitPrice.setText(item.getUnitPrice().toString());
+            lblQyantityOnHand.setText(String.valueOf(item.getQtyOnHand()));
+        } else {
+
+        }
+    }
+
+
 
 
 }

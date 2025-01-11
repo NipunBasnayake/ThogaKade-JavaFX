@@ -1,7 +1,9 @@
 package controller.item;
 
 import model.Item;
+import model.OrderDetail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ItemServices {
@@ -12,4 +14,5 @@ public interface ItemServices {
     List<Item> getItems();
     String getLastId();
     List<String> getItemCodes();
+    boolean updateSellItem(ArrayList<OrderDetail> orderDetails);
 }

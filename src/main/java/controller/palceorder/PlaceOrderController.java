@@ -1,5 +1,6 @@
 package controller.palceorder;
 
+import controller.item.ItemController;
 import controller.order_detail.OrderDetailController;
 import db.DBConnection;
 import model.Order;
@@ -9,8 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PlaceOrderController implements PlaceOrderServices{
     private static PlaceOrderController placeOrderController;
@@ -30,22 +32,55 @@ public class PlaceOrderController implements PlaceOrderServices{
         }
     }
 
-
-
     @Override
-    public boolean placeOrder(OrderDetail orderDetail) {
+    public boolean placeOrder(Order order) {
+        Connection connection = null;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO orders VALUES (?,?,?)");
-            boolean isOrderAdded = statement.executeUpdate() > 0;
+
+            PreparedStatement stm = connection.prepareStatement("INSERT INTO Orders VALUES(?,?,?)");
+            stm.setObject(1, order.getId());
+            stm.setObject(2, convertDateFormat(order.getDate()));
+            stm.setObject(3, order.getCustromerId());
+            boolean isOrderAdded = stm.executeUpdate() > 0;
+
             if (isOrderAdded) {
-                boolean isOrderDetailsAdded = OrderDetailController.getInstance().addOrderDetail();
+                boolean isOrderDetailsAdded = OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails());
+                if (isOrderDetailsAdded) {
+                    boolean isItemTableUpdated = ItemController.getInstance().updateSellItem(order.getOrderDetails());
+                    if (isItemTableUpdated) {
+                        connection.commit();
+                        return true;
+                    }
+                }
             }
+            connection.rollback();
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException("Failed to reset auto-commit", e);
+                }
+            }
         }
-        return false;
+    }
+
+    public static String convertDateFormat(String dateStr) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date date = inputFormat.parse(dateStr);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

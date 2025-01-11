@@ -2,6 +2,7 @@ package controller.item;
 
 import db.DBConnection;
 import model.Item;
+import model.OrderDetail;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -110,5 +111,27 @@ public class ItemController implements ItemServices {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean updateSellItem(ArrayList<OrderDetail> orderDetails) {
+        try {
+            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement("UPDATE item SET qtyOnHand = qtyOnHand - ? WHERE code = ?");
+
+            for (OrderDetail orderDetail : orderDetails) {
+                statement.setInt(1, orderDetail.getQty());
+                statement.setString(2, orderDetail.getItemCode());
+
+                // Execute each update
+                int result = statement.executeUpdate();
+                if (result <= 0) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

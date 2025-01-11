@@ -29,6 +29,7 @@ import model.OrderDetail;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -97,6 +98,7 @@ public class PlaceOrderFormController implements Initializable {
                 Double.parseDouble(lblUnitPrice.getText())
         ));
         tblCart.setItems(itemsObservableArray);
+        setTotal();
     }
 
     @FXML
@@ -106,22 +108,35 @@ public class PlaceOrderFormController implements Initializable {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
-        if (PlaceOrderController.getInstance().placeOrder(new Order(
+        ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+        orderDetails.add(new OrderDetail(
+                lblOrderId.getText(),
+                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                Integer.parseInt(txtQty.getText()),
+                Double.parseDouble(lblUnitPrice.getText())
+        ));
+
+        Order order = new Order(
                 lblOrderId.getText(),
                 lblDate.getText(),
-                cmbCustomerId.getSelectionModel().getSelectedItem().toString()
-        ))){
+                cmbCustomerId.getSelectionModel().getSelectedItem().toString(),
+                orderDetails
+        );
+
+        if (PlaceOrderController.getInstance().placeOrder(order)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("Order Placed Successfully");
             alert.show();
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Failed to Place Order");
             alert.show();
         }
+        itemsObservableArray.clear();
     }
+
 
     @FXML
     public void cmbCustomerIdOnAction(ActionEvent actionEvent) {
@@ -201,6 +216,14 @@ public class PlaceOrderFormController implements Initializable {
         } else {
 
         }
+    }
+
+    private void setTotal() {
+        double total = 0.00;
+        for (CartItem cartItem : itemsObservableArray) {
+            total += cartItem.getTotal();
+        }
+        lblTotal.setText(String.format("%.2f", total));
     }
 
 

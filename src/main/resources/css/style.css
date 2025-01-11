@@ -3,7 +3,7 @@
 }
 
 .tab {
-    -fx-background-color: #9ed4ff;
+    -fx-background-color: #e3e3e3;
     -fx-padding: 8px 12px;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -14,13 +14,13 @@
 }
 
 .tab:selected {
-    -fx-background-color: #0060bd;
-    -fx-border-color: #004a99;
-    -fx-border-width: 0 0 3px 0;
+    -fx-background-color: #1e90ff;
+    /*-fx-border-color: #004a99;*/
+    /*-fx-border-width: 0 0 3px 0;*/
 }
 
 .tab .tab-label {
-    -fx-text-fill: black; /* Default text color for unselected tabs */
+    -fx-text-fill: #005cb5; /* Default text color for unselected tabs */
 }
 
 .tab:selected .tab-label {
@@ -28,5 +28,5 @@
 }
 
 .tab-header-background {
-    -fx-background-color: #003063;
+    -fx-background-color: #ffffff;
 }

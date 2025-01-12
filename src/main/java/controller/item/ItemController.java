@@ -54,15 +54,20 @@ public class ItemController implements ItemServices {
 
     @Override
     public Item searchItem(String id) {
-        try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM item WHERE code = '" + id + "'");
-            res.next();
-            return new Item(
-                    res.getString(1),
-                    res.getString(2),
-                    res.getDouble(3),
-                    res.getInt(4)
-            );
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM item WHERE code = ?")) {
+            stmt.setString(1, id);
+            ResultSet res = stmt.executeQuery();
+
+            if (res.next()) {
+                return new Item(
+                        res.getString("code"),
+                        res.getString("description"),
+                        res.getDouble("unitPrice"),
+                        res.getInt("qtyOnHand")
+                );
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -31,13 +31,15 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceOrderFormController implements Initializable {
 
     @FXML
     public TableColumn colUnitPrice;
+
+    @FXML
+    public JFXTextField txtQuantity;
 
     @FXML
     private JFXComboBox cmbCustomerId;
@@ -70,7 +72,7 @@ public class PlaceOrderFormController implements Initializable {
     private Label lblOrderId;
 
     @FXML
-    private Label lblQyantityOnHand;
+    private Label lblQuantityOnHand;
 
     @FXML
     private Label lblTime;
@@ -90,13 +92,13 @@ public class PlaceOrderFormController implements Initializable {
     ObservableList<CartItem> itemsObservableArray = FXCollections.observableArrayList();
 
     @FXML
-    void btnAddtoCartOnAction(ActionEvent event) {
-        itemsObservableArray.add(new CartItem(
-                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
-                lblDescription.getText(),
-                Integer.parseInt(txtQty.getText()),
-                Double.parseDouble(lblUnitPrice.getText())
-        ));
+    void btnAddtoCartOnAction() {
+        String itemCode = cmbItemCode.getSelectionModel().getSelectedItem().toString();
+        String description = lblDescription.getText();
+        int qty = Integer.parseInt(txtQuantity.getText());
+        double unitPrice = Double.parseDouble(lblUnitPrice.getText());
+
+        itemsObservableArray.add(new CartItem(itemCode, description, qty, unitPrice));
         tblCart.setItems(itemsObservableArray);
         setTotal();
     }
@@ -109,12 +111,14 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         ArrayList<OrderDetail> orderDetails = new ArrayList<>();
-        orderDetails.add(new OrderDetail(
-                lblOrderId.getText(),
-                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
-                Integer.parseInt(txtQty.getText()),
-                Double.parseDouble(lblUnitPrice.getText())
-        ));
+        for (CartItem cartItem : itemsObservableArray) {
+            orderDetails.add(new OrderDetail(
+                    lblOrderId.getText(),
+                    cartItem.getItemCode(),
+                    cartItem.getQty(),
+                    cartItem.getUnitPrice()
+            ));
+        }
 
         Order order = new Order(
                 lblOrderId.getText(),
@@ -124,19 +128,16 @@ public class PlaceOrderFormController implements Initializable {
         );
 
         if (PlaceOrderController.getInstance().placeOrder(order)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Order Placed Successfully");
-            alert.show();
+            showSuccessAlert("Order Placed Successfully", "The order has been placed successfully!");
+            generateOrderId();
+            clearFields();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Failed to Place Order");
-            alert.show();
+            showErrorAlert("Order Failed", "Failed to place the order. Please try again.");
         }
-        itemsObservableArray.clear();
-    }
 
+        itemsObservableArray.clear();
+        tblCart.refresh();
+    }
 
     @FXML
     public void cmbCustomerIdOnAction(ActionEvent actionEvent) {
@@ -156,22 +157,19 @@ public class PlaceOrderFormController implements Initializable {
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
-        loadDateAdnTime();
+
+        loadDateAndTime();
         generateOrderId();
         loadCustomerId();
         loadItemCodes();
     }
 
-    private void loadDateAdnTime() {
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        lblDate.setText(formatter.format(date));
+    private void loadDateAndTime() {
+        lblDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> {
-                    LocalTime now = LocalTime.now();
-                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
-                    lblTime.setText(now.format(dateFormatter));
+                    lblTime.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
                 }),
                 new KeyFrame(Duration.seconds(1))
         );
@@ -180,25 +178,20 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     private void generateOrderId() {
-        int num = Integer.parseInt(PlaceOrderController.getInstance().getLastOrderID().substring(1));
-        num++;
-        String newId = String.format("D%03d", num);
-        lblOrderId.setText(newId);
+        int num = Integer.parseInt(PlaceOrderController.getInstance().getLastOrderID().substring(1)) + 1;
+        lblOrderId.setText(String.format("D%03d", num));
     }
 
     private void loadCustomerId() {
-        List<String> customerIDs = CustomerController.getInstance().getCustomerIDs();
-        ObservableList<String> ids = FXCollections.observableArrayList();
-        customerIDs.forEach(customerID -> {
-            ids.add(customerID);
-        });
+        ObservableList<String> ids = FXCollections.observableArrayList(CustomerController.getInstance().getCustomerIDs());
         cmbCustomerId.setItems(ids);
     }
 
     private void getCustomerName() {
-        String customerName = CustomerController.getInstance().getCustomerName(cmbCustomerId.getValue().toString());
-        if (customerName != null) {
-            lblCustomerName.setText(customerName);
+        String customerId = cmbCustomerId.getValue().toString();
+        if (customerId != null) {
+            String customerName = CustomerController.getInstance().getCustomerName(customerId);
+            lblCustomerName.setText(customerName != null ? customerName : "");
         }
     }
 
@@ -208,23 +201,50 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     private void setItemDetails() {
-        Item item = ItemController.getInstance().searchItem(cmbItemCode.getValue().toString());
-        if (item != null) {
-            lblDescription.setText(item.getDescription());
-            lblUnitPrice.setText(item.getUnitPrice().toString());
-            lblQyantityOnHand.setText(String.valueOf(item.getQtyOnHand()));
-        } else {
-
+        String itemCode = cmbItemCode.getValue().toString();
+        if (itemCode != null) {
+            Item item = ItemController.getInstance().searchItem(itemCode);
+            if (item != null) {
+                lblDescription.setText(item.getDescription());
+                lblUnitPrice.setText(String.format("%.2f", item.getUnitPrice()));
+                lblQuantityOnHand.setText(String.valueOf(item.getQtyOnHand()));
+            } else {
+                showErrorAlert("Item Not Found", "The selected item code does not exist.");
+            }
         }
     }
 
     private void setTotal() {
-        double total = 0.00;
-        for (CartItem cartItem : itemsObservableArray) {
-            total += cartItem.getTotal();
-        }
+        double total = itemsObservableArray.stream().mapToDouble(CartItem::getTotal).sum();
         lblTotal.setText(String.format("%.2f", total));
     }
 
+    public void clearFields() {
+        cmbCustomerId.getSelectionModel().clearSelection();
+        cmbItemCode.getSelectionModel().clearSelection();
+        lblCustomerName.setText("");
+        lblDescription.setText("");
+        lblUnitPrice.setText("");
+        lblQuantityOnHand.setText("");
+        txtQty.clear();
+        lblTotal.setText("0.00");
+        tblCart.getItems().clear();
+    }
+
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showSuccessAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }

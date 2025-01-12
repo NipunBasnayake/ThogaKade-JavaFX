@@ -106,7 +106,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblQyantityOnHand" layoutX="145.0" layoutY="426.0">
+      <Label fx:id="lblQuantityOnHand" layoutX="145.0" layoutY="426.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -116,7 +116,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtQty" focusColor="#3498db" layoutX="146.0" layoutY="471.0" prefHeight="35.0" prefWidth="171.0" unFocusColor="#3498db">
+      <JFXTextField fx:id="txtQuantity" focusColor="#3498db" layoutX="146.0" layoutY="471.0" prefHeight="35.0" prefWidth="171.0" unFocusColor="#3498db">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

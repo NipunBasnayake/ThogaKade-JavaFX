@@ -7,17 +7,19 @@ import lombok.Data;
 public class CartItem {
     private String itemCode;
     private String description;
-    private int qty;
+    private int quantity;
     private double unitPrice;
     private double total;
 
-    public CartItem(String itemCode, String description, int qty, double unitPrice) {
+    public CartItem(String itemCode, String description, int quantity, double unitPrice) {
         this.itemCode = itemCode;
         this.description = description;
-        this.qty = qty;
+        this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.total = qty * unitPrice;
+        this.total = quantity * unitPrice;
     }
 
-    public CartItem() {}
+    public CartItem() {
+
+    }
 }

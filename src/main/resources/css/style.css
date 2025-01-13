@@ -15,27 +15,18 @@
 
 .tab:selected {
     -fx-background-color: #1e90ff;
+    /*-fx-border-color: #004a99;*/
+    /*-fx-border-width: 0 0 3px 0;*/
 }
 
 .tab .tab-label {
-    -fx-text-fill: #005cb5;
+    -fx-text-fill: #005cb5; /* Default text color for unselected tabs */
 }
 
 .tab:selected .tab-label {
-    -fx-text-fill: white;
+    -fx-text-fill: white; /* Text color for selected tab */
 }
 
 .tab-header-background {
     -fx-background-color: #ffffff;
 }
-
-.jfx-combobox {
-    -fx-padding: 3px;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-}
-
-.jfx-combobox .combo-box-arrow {
-    -fx-background-color: #42b2ff;
-}
-

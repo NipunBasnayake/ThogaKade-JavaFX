@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="573.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.AddCustomerFormController">
+   <children>
+      <Label layoutX="68.0" layoutY="42.0" text="Add Customer Form" textFill="#3867d6">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtID" focusColor="#3867d6" layoutX="47.0" layoutY="136.0" prefHeight="35.0" prefWidth="328.0" promptText="Customer Id" unFocusColor="#3867d6">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtName" focusColor="#3867d6" layoutX="47.0" layoutY="221.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Name" unFocusColor="#3867d6">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtAddress" focusColor="#3867d6" layoutX="47.0" layoutY="308.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Address" unFocusColor="#3867d6">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtSalary" focusColor="#3867d6" layoutX="47.0" layoutY="392.0" prefHeight="30.0" prefWidth="328.0" promptText="Customer Salary" unFocusColor="#3867d6">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton layoutX="133.0" layoutY="483.0" onAction="#btnAddOnAction" prefHeight="39.0" prefWidth="155.0" style="-fx-background-color: #2ecc71;" styleClass="edge-button" stylesheets="@../css/button.css" text="Add Customer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

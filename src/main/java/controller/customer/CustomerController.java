@@ -38,7 +38,7 @@ public class CustomerController implements CustomerServices {
             statement.setString(2, customer.getAddress());
             statement.setDouble(3, customer.getSalary());
             statement.setString(4, customer.getId());
-            return statement.executeUpdate() >0;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -103,30 +103,17 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public List<String> getCustomerIDs() {
-        try {
-            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM customer");
-            List<String> customerIDs = new ArrayList<>();
-            while (resultSet.next()) {
-                customerIDs.add(resultSet.getString(1));
-            }
-            return customerIDs;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<String> customerIDs = new ArrayList<>();
+        getCustomers().forEach(customer -> {
+            customerIDs.add(customer.getId());
+        });
+        return customerIDs;
     }
 
     @Override
     public String getCustomerName(String id) {
-        try {
-            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT name FROM customer WHERE id = '" + id + "'");
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Customer customer = searchCustomer(id);
+        return customer.getName();
     }
-
 
 }

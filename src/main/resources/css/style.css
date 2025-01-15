@@ -20,11 +20,11 @@
 }
 
 .tab .tab-label {
-    -fx-text-fill: #005cb5; /* Default text color for unselected tabs */
+    -fx-text-fill: #005cb5;
 }
 
 .tab:selected .tab-label {
-    -fx-text-fill: white; /* Text color for selected tab */
+    -fx-text-fill: white;
 }
 
 .tab-header-background {

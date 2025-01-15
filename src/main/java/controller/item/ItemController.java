@@ -100,16 +100,11 @@ public class ItemController implements ItemServices {
 
     @Override
     public List<String> getItemCodes() {
-        try {
-            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT code FROM item");
-            List<String> itemCodes = new ArrayList<>();
-            while (resultSet.next()) {
-                itemCodes.add(resultSet.getString(1));
-            }
-            return itemCodes;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<String> itemCodes = new ArrayList<>();
+        getItems().forEach(item -> {
+            itemCodes.add(item.getItemCode());
+        });
+        return itemCodes;
     }
 
     @Override

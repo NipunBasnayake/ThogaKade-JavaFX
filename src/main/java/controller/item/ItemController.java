@@ -128,5 +128,13 @@ public class ItemController implements ItemServices {
         }
     }
 
+    public int getQtyOnHand(String itemId) {
+        Item item = searchItem(itemId);
+        return item.getQtyOnHand();
+    }
 
+
+    public boolean updateItems(ArrayList<OrderDetail> orderDetails) {
+        return false;
+    }
 }

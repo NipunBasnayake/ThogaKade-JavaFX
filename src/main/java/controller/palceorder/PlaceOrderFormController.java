@@ -96,14 +96,41 @@ public class PlaceOrderFormController implements Initializable {
 
     @FXML
     void btnAddtoCartOnAction(ActionEvent event) {
-        itemsObservableArray.add(new CartItem(
-                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
-                lblDescription.getText(),
-                Integer.parseInt(txtQty.getText()),
-                Double.parseDouble(lblUnitPrice.getText())
-        ));
-        tblCart.setItems(itemsObservableArray);
-        setTotal();
+
+        int qtyOnHand = ItemController.getInstance().getQtyOnHand(cmbItemCode.getSelectionModel().getSelectedItem().toString());
+        if (qtyOnHand >= Integer.parseInt(txtQty.getText())) {
+            int indexOf = itemsObservableArray.indexOf(new CartItem(
+                    cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                    lblDescription.getText(),
+                    Integer.parseInt(txtQty.getText()),
+                    Double.parseDouble(lblUnitPrice.getText())
+            ));
+
+            if (indexOf != -1) {
+                CartItem existCartItem = itemsObservableArray.get(indexOf);
+                itemsObservableArray.set(indexOf, new CartItem(
+                        cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                        lblDescription.getText(),
+                        Integer.parseInt(txtQty.getText())+existCartItem.getQuantity(),
+                        Double.parseDouble(lblUnitPrice.getText())
+                ));
+            }else{
+                itemsObservableArray.add(new CartItem(
+                        cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                        lblDescription.getText(),
+                        Integer.parseInt(txtQty.getText()),
+                        Double.parseDouble(lblUnitPrice.getText())
+                ));
+                tblCart.setItems(itemsObservableArray);
+            }
+
+            setTotal();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Qty On Hand");
+            alert.show();
+        }
     }
 
     @FXML
@@ -122,12 +149,14 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         ArrayList<OrderDetail> orderDetails = new ArrayList<>();
-        orderDetails.add(new OrderDetail(
-                lblOrderId.getText(),
-                cmbItemCode.getSelectionModel().getSelectedItem().toString(),
-                Integer.parseInt(txtQty.getText()),
-                Double.parseDouble(lblUnitPrice.getText())
-        ));
+        itemsObservableArray.forEach(cartItem -> {
+            orderDetails.add(new OrderDetail(
+                    lblOrderId.getText(),
+                    cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                    cartItem.getQuantity(),
+                    cartItem.getUnitPrice()
+            ));
+        });
 
         Order order = new Order(
                 lblOrderId.getText(),
@@ -141,6 +170,7 @@ public class PlaceOrderFormController implements Initializable {
             alert.setTitle("Success");
             alert.setHeaderText("Order Placed Successfully");
             alert.show();
+            generateOrderId();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -165,7 +195,7 @@ public class PlaceOrderFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colItemCode.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 

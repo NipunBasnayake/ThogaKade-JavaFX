@@ -2,6 +2,8 @@ package model;
 
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 
 public class CartItem {
@@ -22,4 +24,13 @@ public class CartItem {
     public CartItem() {
 
     }
+
+    public boolean equals(Object obj) {
+        CartItem cartItem = (CartItem) obj;
+        if(this.itemCode == cartItem.getItemCode()) {
+            return true;
+        }
+        return false;
+    }
+
 }

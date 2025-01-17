@@ -39,17 +39,9 @@ public class PlaceOrderController implements PlaceOrderServices{
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            PreparedStatement stm = connection.prepareStatement("INSERT INTO Orders VALUES(?,?,?)");
-            stm.setObject(1, order.getId());
-            stm.setObject(2, convertDateFormat(order.getDate()));
-            stm.setObject(3, order.getCustromerId());
-            boolean isOrderAdded = stm.executeUpdate() > 0;
-
-            if (isOrderAdded) {
-                boolean isOrderDetailsAdded = OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails());
-                if (isOrderDetailsAdded) {
-                    boolean isItemTableUpdated = ItemController.getInstance().updateSellItem(order.getOrderDetails());
-                    if (isItemTableUpdated) {
+            if (addOrder(connection, order)) {
+                if (OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails())) {
+                    if (ItemController.getInstance().updateItems(order.getOrderDetails())) {
                         connection.commit();
                         return true;
                     }
@@ -58,17 +50,37 @@ public class PlaceOrderController implements PlaceOrderServices{
             connection.rollback();
             return false;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException rollbackException) {
+                    rollbackException.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            return false;
         } finally {
             if (connection != null) {
                 try {
                     connection.setAutoCommit(true);
                 } catch (SQLException e) {
-                    throw new RuntimeException("Failed to reset auto-commit", e);
+                    e.printStackTrace();
                 }
             }
         }
     }
+
+    private boolean addOrder(Connection connection, Order order) throws SQLException {
+        String sql = "INSERT INTO orders VALUES (?,?,?,?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, order.getId());
+            statement.setString(2, convertDateFormat(order.getDate()));
+            statement.setString(3, order.getCustromerId());
+            return statement.executeUpdate() > 0;
+        }
+    }
+
+
 
     public static String convertDateFormat(String dateStr) {
         try {

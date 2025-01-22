@@ -18,64 +18,31 @@ public class OrderDetailController implements OrderDetailServices {
 
     @Override
     public boolean addOrderDetail(ArrayList<OrderDetail> orderDetails) {
-        Connection connection = null;
-        PreparedStatement checkStmt = null;
-        PreparedStatement insertStmt = null;
+//        System.out.println(orderDetails.toString());
+//        return false;
+       for (OrderDetail orderDetail : orderDetails) {
+           boolean isAdded = addOrderDetail(orderDetail);
+           if (!isAdded) {
+               return false;
+           }
+       }
+       return true;
+    }
 
+    public boolean addOrderDetail(OrderDetail orderDetail) {
+//        System.out.println(orderDetail.toString());
+//        return false;
+        String SQL = "INSERT INTO orderdetail VALUES (?,?,?,?)";
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            checkStmt = connection.prepareStatement("SELECT COUNT(*) FROM orderdetail WHERE orderId = ? AND itemCode = ?");
-            insertStmt = connection.prepareStatement("INSERT INTO orderdetail VALUES(?,?,?,?)");
-
-            for (OrderDetail orderDetail : orderDetails) {
-                checkStmt.setString(1, orderDetail.getOrderId());
-                checkStmt.setString(2, orderDetail.getItemCode());
-                ResultSet rs = checkStmt.executeQuery();
-
-                if (rs.next() && rs.getInt(1) > 0) {
-                    continue;
-                }
-                insertStmt.setString(1, orderDetail.getOrderId());
-                insertStmt.setString(2, orderDetail.getItemCode());
-                insertStmt.setInt(3, orderDetail.getQty());
-                insertStmt.setDouble(4, orderDetail.getUnitPrice());
-                insertStmt.addBatch();
-            }
-
-            int[] results = insertStmt.executeBatch();
-
-            for (int result : results) {
-                if (result == PreparedStatement.EXECUTE_FAILED) {
-                    connection.rollback();
-                    return false;
-                }
-            }
-
-            connection.commit();
-            return true;
-
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, orderDetail.getOrderId());
+            preparedStatement.setString(2, orderDetail.getItemCode());
+            preparedStatement.setInt(3, orderDetail.getQty());
+            preparedStatement.setDouble(4, orderDetail.getUnitPrice());
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
-                }
-            }
-            throw new RuntimeException("Failed to add order details", e);
-
-        } finally {
-            try {
-                if (insertStmt != null) insertStmt.close();
-                if (checkStmt != null) checkStmt.close();
-                if (connection != null) {
-                    connection.setAutoCommit(true);
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            throw new RuntimeException(e);
         }
     }
 

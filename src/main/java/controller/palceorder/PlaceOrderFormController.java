@@ -32,6 +32,7 @@ import model.Item;
 import model.Order;
 import model.OrderDetail;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -149,18 +150,18 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         ArrayList<OrderDetail> orderDetails = new ArrayList<>();
-        itemsObservableArray.forEach(cartItem -> {
+        for(CartItem cartItem : itemsObservableArray){
             orderDetails.add(new OrderDetail(
                     lblOrderId.getText(),
-                    cmbItemCode.getSelectionModel().getSelectedItem().toString(),
+                    cartItem.getItemCode(),
                     cartItem.getQuantity(),
                     cartItem.getUnitPrice()
             ));
-        });
+        }
 
         Order order = new Order(
                 lblOrderId.getText(),
-                lblDate.getText(),
+                LocalDate.parse(lblDate.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 cmbCustomerId.getSelectionModel().getSelectedItem().toString(),
                 orderDetails
         );

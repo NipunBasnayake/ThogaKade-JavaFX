@@ -36,64 +36,60 @@ public class PlaceOrderController implements PlaceOrderServices{
     public boolean placeOrder(Order order) {
         Connection connection = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
+            String SQL = "INSERT INTO orders VALUES (?,?,?)";
 
-            if (addOrder(connection, order)) {
-                if (OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails())) {
-                    if (ItemController.getInstance().updateItems(order.getOrderDetails())) {
-                        connection.commit();
-                        return true;
+            try {
+                connection = DBConnection.getInstance().getConnection();
+                connection.setAutoCommit(false);
+
+                PreparedStatement insertStmt = connection.prepareStatement(SQL);
+                insertStmt.setString(1, order.getId());
+                insertStmt.setString(2, order.getDate().toString());
+                insertStmt.setString(3, order.getCustromerId());
+                boolean isAddedToOrder = insertStmt.executeUpdate() > 0;
+
+                if (isAddedToOrder) {
+                    boolean isAddedToOrderDetails = OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails());
+                    if (isAddedToOrderDetails) {
+                        boolean isUpdatedItem = ItemController.getInstance().updateSellItem(order.getOrderDetails());
+                        if(isUpdatedItem) {
+                            connection.commit();
+                            return true;
+                        }
                     }
                 }
+                connection.rollback();
+                return false;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-            connection.rollback();
-            return false;
-        } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException rollbackException) {
-                    rollbackException.printStackTrace();
-                }
-            }
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
-    private boolean addOrder(Connection connection, Order order) throws SQLException {
-        String sql = "INSERT INTO orders VALUES (?,?,?,?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, order.getId());
-            statement.setString(2, convertDateFormat(order.getDate()));
-            statement.setString(3, order.getCustromerId());
-            return statement.executeUpdate() > 0;
+        }finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 
 
 
-    public static String convertDateFormat(String dateStr) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date date = inputFormat.parse(dateStr);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
+//    public static String convertDateFormat(String dateStr) {
+//        try {
+//            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+//            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//            Date date = inputFormat.parse(dateStr);
+//            return outputFormat.format(date);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 
 

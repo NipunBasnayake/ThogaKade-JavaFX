@@ -109,23 +109,27 @@ public class ItemController implements ItemServices {
 
     @Override
     public boolean updateSellItem(ArrayList<OrderDetail> orderDetails) {
-        try {
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement("UPDATE item SET qtyOnHand = qtyOnHand - ? WHERE code = ?");
-
-            for (OrderDetail orderDetail : orderDetails) {
-                statement.setInt(1, orderDetail.getQty());
-                statement.setString(2, orderDetail.getItemCode());
-
-                // Execute each update
-                int result = statement.executeUpdate();
-                if (result <= 0) {
-                    return false;
-                }
+        for (OrderDetail orderDetail : orderDetails) {
+            boolean isItemUpdate = updateSellItem(orderDetail);
+            if (!isItemUpdate) {
+                return false;
             }
-            return true;
+        }
+        return true;
+    }
+
+    public boolean updateSellItem(OrderDetail orderDetail) {
+        String SQL = "UPDATE item SET qtyOnHand=qtyOnHand-? WHERE code=?";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setInt(1, orderDetail.getQty());
+            statement.setString(2, orderDetail.getItemCode());
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public int getQtyOnHand(String itemId) {

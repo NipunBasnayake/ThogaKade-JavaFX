@@ -2,6 +2,7 @@ package controller.customer;
 
 import db.DBConnection;
 import model.Customer;
+import util.CrudUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,14 +17,9 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public boolean addCustomer(Customer customer) {
-        PreparedStatement statement = null;
+        String SQL = "INSERT INTO customers VALUES (?,?,?,?)";
         try {
-            statement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
-            statement.setString(1, customer.getId());
-            statement.setString(2, customer.getName());
-            statement.setString(3, customer.getAddress());
-            statement.setDouble(4, customer.getSalary());
-            return statement.executeUpdate() > 0;
+            return CrudUtil.execute(SQL, customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -31,14 +27,9 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public boolean updateCustomer(Customer customer) {
-        PreparedStatement statement = null;
+        String SQL = "UPDATE customer SET name=?,address=?,salary=? WHERE id=?";
         try {
-            statement = DBConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET name=?,address=?,salary=? WHERE id=?");
-            statement.setString(1, customer.getName());
-            statement.setString(2, customer.getAddress());
-            statement.setDouble(3, customer.getSalary());
-            statement.setString(4, customer.getId());
-            return statement.executeUpdate() > 0;
+            return CrudUtil.execute(SQL, customer.getName(), customer.getAddress(), customer.getSalary(), customer.getId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -46,8 +37,9 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public boolean deleteCustomer(String id) {
+        String SQL = "DELETE FROM customers WHERE id=?";
         try {
-            return DBConnection.getInstance().getConnection().createStatement().executeUpdate("DELETE FROM customer WHERE id = '" + id + "'") > 0;
+            return CrudUtil.execute(SQL, id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,9 +47,9 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public Customer searchCustomer(String id) {
+        String SQL = "SELECT * FROM customers WHERE id=?";
         try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer WHERE id = '" + id + "'");
-            res.next();
+            ResultSet res = CrudUtil.execute(SQL, id);
             return new Customer(
                     res.getString(1),
                     res.getString(2),
@@ -71,10 +63,10 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public List<Customer> getCustomers() {
-        Connection connection = null;
+        String SQL = "SELECT * FROM customer";
+        List<Customer> customers = new ArrayList<>();
         try {
-            List<Customer> customers = new ArrayList<>();
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer");
+            ResultSet res = CrudUtil.execute(SQL);
             while (res.next()) {
                 customers.add(new Customer(
                         res.getString(1),
@@ -91,9 +83,9 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public String getLastId() {
-        ResultSet res = null;
+        String SQL = "SELECT id FROM customers ORDER BY id DESC LIMIT 1";
         try {
-            res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM customer ORDER BY id DESC LIMIT 1");
+            ResultSet res = CrudUtil.execute(SQL);
             res.next();
             return res.getString(1);
         } catch (SQLException e) {

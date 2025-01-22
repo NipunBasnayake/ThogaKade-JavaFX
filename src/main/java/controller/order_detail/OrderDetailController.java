@@ -18,8 +18,6 @@ public class OrderDetailController implements OrderDetailServices {
 
     @Override
     public boolean addOrderDetail(ArrayList<OrderDetail> orderDetails) {
-//        System.out.println(orderDetails.toString());
-//        return false;
        for (OrderDetail orderDetail : orderDetails) {
            boolean isAdded = addOrderDetail(orderDetail);
            if (!isAdded) {
@@ -30,8 +28,6 @@ public class OrderDetailController implements OrderDetailServices {
     }
 
     public boolean addOrderDetail(OrderDetail orderDetail) {
-//        System.out.println(orderDetail.toString());
-//        return false;
         String SQL = "INSERT INTO orderdetail VALUES (?,?,?,?)";
         try {
             Connection connection = DBConnection.getInstance().getConnection();

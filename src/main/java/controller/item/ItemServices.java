@@ -16,5 +16,4 @@ public interface ItemServices {
     List<String> getItemCodes();
     boolean updateSellItem(ArrayList<OrderDetail> orderDetails);
     int getQtyOnHand(String itemId);
-    boolean updateItems(ArrayList<OrderDetail> orderDetails);
 }

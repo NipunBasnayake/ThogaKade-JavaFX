@@ -14,11 +14,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PlaceOrderController implements PlaceOrderServices{
+public class PlaceOrderController implements PlaceOrderServices {
     private static PlaceOrderController placeOrderController;
 
     public static PlaceOrderController getInstance() {
-        return placeOrderController==null?placeOrderController=new PlaceOrderController():placeOrderController;
+        return placeOrderController == null ? placeOrderController = new PlaceOrderController() : placeOrderController;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PlaceOrderController implements PlaceOrderServices{
                     boolean isAddedToOrderDetails = OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails());
                     if (isAddedToOrderDetails) {
                         boolean isUpdatedItem = ItemController.getInstance().updateSellItem(order.getOrderDetails());
-                        if(isUpdatedItem) {
+                        if (isUpdatedItem) {
                             connection.commit();
                             return true;
                         }
@@ -63,34 +63,13 @@ public class PlaceOrderController implements PlaceOrderServices{
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-        }finally {
+        } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-
     }
-
-
-
-
-
-//    public static String convertDateFormat(String dateStr) {
-//        try {
-//            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-//            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-//
-//            Date date = inputFormat.parse(dateStr);
-//            return outputFormat.format(date);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-
 
 }

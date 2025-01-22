@@ -3,6 +3,7 @@ package controller.item;
 import db.DBConnection;
 import model.Item;
 import model.OrderDetail;
+import util.CrudUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,13 +18,9 @@ public class ItemController implements ItemServices {
 
     @Override
     public boolean addItem(Item item) {
+        String SQL = "INSERT INTO item VALUES (?,?,?,?)";
         try {
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO item VALUES (?,?,?,?)");
-            statement.setString(1, item.getItemCode());
-            statement.setString(2, item.getDescription());
-            statement.setDouble(3, item.getUnitPrice());
-            statement.setInt(4, item.getQtyOnHand());
-            return statement.executeUpdate() > 0;
+            return CrudUtil.execute(SQL, item.getItemCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -31,13 +28,9 @@ public class ItemController implements ItemServices {
 
     @Override
     public boolean updateItem(Item item) {
+        String SQL = "UPDATE item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?";
         try {
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement("UPDATE item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
-            statement.setString(1, item.getDescription());
-            statement.setDouble(2, item.getUnitPrice());
-            statement.setInt(3, item.getQtyOnHand());
-            statement.setString(4, item.getItemCode());
-            return statement.executeUpdate() > 0;
+            return CrudUtil.execute(SQL, item.getDescription(), item.getUnitPrice(), item.getQtyOnHand(), item.getItemCode());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -45,8 +38,9 @@ public class ItemController implements ItemServices {
 
     @Override
     public boolean deleteItem(String id) {
+        String SQL = "DELETE FROM item WHERE code=?";
         try {
-            return DBConnection.getInstance().getConnection().createStatement().executeUpdate("DELETE FROM item WHERE code = '" + id + "'") > 0;
+            return CrudUtil.execute(SQL, id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -54,8 +48,9 @@ public class ItemController implements ItemServices {
 
     @Override
     public Item searchItem(String id) {
+        String SQL = "SELECT * FROM item WHERE code=?";
         try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM item WHERE code = '" + id + "'");
+            ResultSet res = CrudUtil.execute(SQL, id);
             res.next();
             return new Item(
                     res.getString(1),
@@ -70,9 +65,10 @@ public class ItemController implements ItemServices {
 
     @Override
     public List<Item> getItems() {
+        String SQL = "SELECT * FROM item";
         List<Item> itemsList = new ArrayList<>();
         try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM item");
+            ResultSet res = CrudUtil.execute(SQL);
             while (res.next()) {
                 itemsList.add(new Item(
                         res.getString(1),
@@ -89,8 +85,9 @@ public class ItemController implements ItemServices {
 
     @Override
     public String getLastId() {
+        String SQL = "SELECT code from item ORDER BY code DESC LIMIT 1";
         try {
-            ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT code from item ORDER BY code DESC LIMIT 1");
+            ResultSet res = CrudUtil.execute(SQL);
             res.next();
             return res.getString(1);
         } catch (SQLException e) {
@@ -121,15 +118,10 @@ public class ItemController implements ItemServices {
     public boolean updateSellItem(OrderDetail orderDetail) {
         String SQL = "UPDATE item SET qtyOnHand=qtyOnHand-? WHERE code=?";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL);
-            statement.setInt(1, orderDetail.getQty());
-            statement.setString(2, orderDetail.getItemCode());
-            return statement.executeUpdate() > 0;
+            return CrudUtil.execute(SQL, orderDetail.getQty(), orderDetail.getItemCode());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public int getQtyOnHand(String itemId) {

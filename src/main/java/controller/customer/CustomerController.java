@@ -1,6 +1,5 @@
 package controller.customer;
 
-import db.DBConnection;
 import model.Customer;
 import util.CrudUtil;
 
@@ -17,7 +16,7 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public boolean addCustomer(Customer customer) {
-        String SQL = "INSERT INTO customers VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO customer VALUES (?,?,?,?)";
         try {
             return CrudUtil.execute(SQL, customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary());
         } catch (SQLException e) {
@@ -37,7 +36,7 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public boolean deleteCustomer(String id) {
-        String SQL = "DELETE FROM customers WHERE id=?";
+        String SQL = "DELETE FROM customer WHERE id=?";
         try {
             return CrudUtil.execute(SQL, id);
         } catch (SQLException e) {
@@ -47,7 +46,7 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public Customer searchCustomer(String id) {
-        String SQL = "SELECT * FROM customers WHERE id=?";
+        String SQL = "SELECT * FROM customer WHERE id=?";
         try {
             ResultSet res = CrudUtil.execute(SQL, id);
             return new Customer(
@@ -83,7 +82,7 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public String getLastId() {
-        String SQL = "SELECT id FROM customers ORDER BY id DESC LIMIT 1";
+        String SQL = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
         try {
             ResultSet res = CrudUtil.execute(SQL);
             res.next();
@@ -107,5 +106,4 @@ public class CustomerController implements CustomerServices {
         Customer customer = searchCustomer(id);
         return customer.getName();
     }
-
 }

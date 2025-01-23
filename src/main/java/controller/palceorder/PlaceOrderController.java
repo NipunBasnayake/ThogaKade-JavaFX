@@ -4,31 +4,32 @@ import controller.item.ItemController;
 import controller.order_detail.OrderDetailController;
 import db.DBConnection;
 import model.Order;
-import model.OrderDetail;
+import util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class PlaceOrderController implements PlaceOrderServices {
     private static PlaceOrderController placeOrderController;
 
     public static PlaceOrderController getInstance() {
-        return placeOrderController == null ? placeOrderController = new PlaceOrderController() : placeOrderController;
+        if (placeOrderController == null) {
+            placeOrderController = new PlaceOrderController();
+        }
+        return placeOrderController;
     }
 
     @Override
     public String getLastOrderID() {
+        String sql = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
         try {
-            ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
+            ResultSet resultSet = CrudUtil.execute(sql);
             resultSet.next();
             return resultSet.getString(1);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -36,13 +37,13 @@ public class PlaceOrderController implements PlaceOrderServices {
     public boolean placeOrder(Order order) {
         Connection connection = null;
         try {
-            String SQL = "INSERT INTO orders VALUES (?,?,?)";
+            String sql = "INSERT INTO orders VALUES (?,?,?)";
 
             try {
                 connection = DBConnection.getInstance().getConnection();
                 connection.setAutoCommit(false);
 
-                PreparedStatement insertStmt = connection.prepareStatement(SQL);
+                PreparedStatement insertStmt = connection.prepareStatement(sql);
                 insertStmt.setString(1, order.getId());
                 insertStmt.setString(2, order.getDate().toString());
                 insertStmt.setString(3, order.getCustromerId());
@@ -61,7 +62,7 @@ public class PlaceOrderController implements PlaceOrderServices {
                 connection.rollback();
                 return false;
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                return false;
             }
         } finally {
             try {

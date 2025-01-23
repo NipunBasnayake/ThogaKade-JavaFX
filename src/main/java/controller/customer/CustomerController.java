@@ -11,44 +11,47 @@ public class CustomerController implements CustomerServices {
     private static CustomerController customerController;
 
     public static CustomerController getInstance() {
-        return customerController == null ? customerController = new CustomerController() : customerController;
+        if (customerController == null) {
+            customerController = new CustomerController();
+        }
+        return customerController;
     }
 
     @Override
     public boolean addCustomer(Customer customer) {
-        String SQL = "INSERT INTO customer VALUES (?,?,?,?)";
+        String sql = "INSERT INTO customer VALUES (?,?,?,?)";
         try {
-            return CrudUtil.execute(SQL, customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary());
+            return CrudUtil.execute(sql, customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public boolean updateCustomer(Customer customer) {
-        String SQL = "UPDATE customer SET name=?,address=?,salary=? WHERE id=?";
+        String sql = "UPDATE customer SET name=?,address=?,salary=? WHERE id=?";
         try {
-            return CrudUtil.execute(SQL, customer.getName(), customer.getAddress(), customer.getSalary(), customer.getId());
+            return CrudUtil.execute(sql, customer.getName(), customer.getAddress(), customer.getSalary(), customer.getId());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public boolean deleteCustomer(String id) {
-        String SQL = "DELETE FROM customer WHERE id=?";
+        String sql = "DELETE FROM customer WHERE id=?";
         try {
-            return CrudUtil.execute(SQL, id);
+            return CrudUtil.execute(sql, id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public Customer searchCustomer(String id) {
-        String SQL = "SELECT * FROM customer WHERE id=?";
+        String sql = "SELECT * FROM customer WHERE id=?";
         try {
-            ResultSet res = CrudUtil.execute(SQL, id);
+            ResultSet res = CrudUtil.execute(sql, id);
             return new Customer(
                     res.getString(1),
                     res.getString(2),
@@ -56,16 +59,16 @@ public class CustomerController implements CustomerServices {
                     Double.parseDouble(res.getString(4))
             );
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
     @Override
     public List<Customer> getCustomers() {
-        String SQL = "SELECT * FROM customer";
+        String sql = "SELECT * FROM customer";
         List<Customer> customers = new ArrayList<>();
         try {
-            ResultSet res = CrudUtil.execute(SQL);
+            ResultSet res = CrudUtil.execute(sql);
             while (res.next()) {
                 customers.add(new Customer(
                         res.getString(1),
@@ -76,28 +79,26 @@ public class CustomerController implements CustomerServices {
             }
             return customers;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return customers.isEmpty() ? null : customers;
         }
     }
 
     @Override
     public String getLastId() {
-        String SQL = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
+        String sql = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
         try {
-            ResultSet res = CrudUtil.execute(SQL);
+            ResultSet res = CrudUtil.execute(sql);
             res.next();
             return res.getString(1);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
     @Override
     public List<String> getCustomerIDs() {
         List<String> customerIDs = new ArrayList<>();
-        getCustomers().forEach(customer -> {
-            customerIDs.add(customer.getId());
-        });
+        getCustomers().forEach(customer -> customerIDs.add(customer.getId()));
         return customerIDs;
     }
 

@@ -9,7 +9,7 @@ import javafx.scene.control.TabPane;
 import java.io.IOException;
 import java.net.URL;
 
-public class DashboardController {
+public class DashboardFormController {
     @FXML
     public TabPane tabPane;
     @FXML

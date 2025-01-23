@@ -1,6 +1,5 @@
 package controller.item;
 
-import db.DBConnection;
 import model.Item;
 import model.OrderDetail;
 import util.CrudUtil;
@@ -13,44 +12,47 @@ public class ItemController implements ItemServices {
     private static ItemController itemController;
 
     public static ItemController getInstance() {
-        return itemController == null ? itemController = new ItemController() : itemController;
+        if (itemController == null) {
+            itemController = new ItemController();
+        }
+        return itemController;
     }
 
     @Override
     public boolean addItem(Item item) {
-        String SQL = "INSERT INTO item VALUES (?,?,?,?)";
+        String sql = "INSERT INTO item VALUES (?,?,?,?)";
         try {
-            return CrudUtil.execute(SQL, item.getItemCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
+            return CrudUtil.execute(sql, item.getItemCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public boolean updateItem(Item item) {
-        String SQL = "UPDATE item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?";
+        String sql = "UPDATE item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?";
         try {
-            return CrudUtil.execute(SQL, item.getDescription(), item.getUnitPrice(), item.getQtyOnHand(), item.getItemCode());
+            return CrudUtil.execute(sql, item.getDescription(), item.getUnitPrice(), item.getQtyOnHand(), item.getItemCode());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public boolean deleteItem(String id) {
-        String SQL = "DELETE FROM item WHERE code=?";
+        String sql = "DELETE FROM item WHERE code=?";
         try {
-            return CrudUtil.execute(SQL, id);
+            return CrudUtil.execute(sql, id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
     @Override
     public Item searchItem(String id) {
-        String SQL = "SELECT * FROM item WHERE code=?";
+        String sql = "SELECT * FROM item WHERE code=?";
         try {
-            ResultSet res = CrudUtil.execute(SQL, id);
+            ResultSet res = CrudUtil.execute(sql, id);
             res.next();
             return new Item(
                     res.getString(1),
@@ -59,16 +61,16 @@ public class ItemController implements ItemServices {
                     res.getInt(4)
             );
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
     @Override
     public List<Item> getItems() {
-        String SQL = "SELECT * FROM item";
+        String sql = "SELECT * FROM item";
         List<Item> itemsList = new ArrayList<>();
         try {
-            ResultSet res = CrudUtil.execute(SQL);
+            ResultSet res = CrudUtil.execute(sql);
             while (res.next()) {
                 itemsList.add(new Item(
                         res.getString(1),
@@ -79,28 +81,26 @@ public class ItemController implements ItemServices {
             }
             return itemsList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return itemsList.isEmpty() ? null : itemsList;
         }
     }
 
     @Override
     public String getLastId() {
-        String SQL = "SELECT code from item ORDER BY code DESC LIMIT 1";
+        String sql = "SELECT code FROM item ORDER BY code DESC LIMIT 1";
         try {
-            ResultSet res = CrudUtil.execute(SQL);
+            ResultSet res = CrudUtil.execute(sql);
             res.next();
             return res.getString(1);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
     @Override
     public List<String> getItemCodes() {
         List<String> itemCodes = new ArrayList<>();
-        getItems().forEach(item -> {
-            itemCodes.add(item.getItemCode());
-        });
+        getItems().forEach(item -> itemCodes.add(item.getItemCode()));
         return itemCodes;
     }
 
@@ -116,11 +116,11 @@ public class ItemController implements ItemServices {
     }
 
     public boolean updateSellItem(OrderDetail orderDetail) {
-        String SQL = "UPDATE item SET qtyOnHand=qtyOnHand-? WHERE code=?";
+        String sql = "UPDATE item SET qtyOnHand=qtyOnHand-? WHERE code=?";
         try {
-            return CrudUtil.execute(SQL, orderDetail.getQty(), orderDetail.getItemCode());
+            return CrudUtil.execute(sql, orderDetail.getQty(), orderDetail.getItemCode());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="614.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dashbord.DashboardController">
+<AnchorPane prefHeight="614.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dashbord.DashboardFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="646.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="971.0" />
       <TabPane fx:id="tabPane" layoutX="-1.0" layoutY="-1.0" prefHeight="645.0" prefWidth="977.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE">

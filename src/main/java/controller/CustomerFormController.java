@@ -1,4 +1,4 @@
-package controller.customer;
+package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
+import service.custom.impl.CustomerController;
 
 import java.net.URL;
 import java.util.Optional;

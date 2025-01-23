@@ -1,10 +1,8 @@
-package controller.palceorder;
+package service.custom;
 
 import model.Order;
-import model.OrderDetail;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public interface PlaceOrderServices {
     String getLastOrderID();

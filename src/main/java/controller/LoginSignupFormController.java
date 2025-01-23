@@ -1,4 +1,4 @@
-package controller.login_signup;
+package controller;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.User;
 import animatefx.animation.*;
 import org.jasypt.util.text.BasicTextEncryptor;
+import service.custom.impl.LoginSignupController;
 
 import java.io.IOException;
 

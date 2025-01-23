@@ -1,4 +1,4 @@
-package controller.customer;
+package service.custom;
 
 import model.Customer;
 

@@ -1,4 +1,4 @@
-package controller.customer;
+package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import model.Customer;
+import service.custom.impl.CustomerController;
 
 import java.net.URL;
 import java.util.ResourceBundle;

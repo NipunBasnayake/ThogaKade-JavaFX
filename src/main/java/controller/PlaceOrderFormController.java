@@ -1,9 +1,9 @@
-package controller.palceorder;
+package controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import controller.customer.CustomerController;
-import controller.item.ItemController;
+import service.custom.impl.CustomerController;
+import service.custom.impl.ItemController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -31,6 +30,7 @@ import model.CartItem;
 import model.Item;
 import model.Order;
 import model.OrderDetail;
+import service.custom.impl.PlaceOrderController;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

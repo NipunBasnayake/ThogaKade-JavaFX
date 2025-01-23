@@ -1,13 +1,14 @@
-package controller.login_signup;
+package service.custom.impl;
 
 import model.User;
 import org.jasypt.util.text.BasicTextEncryptor;
+import service.custom.LoginSignupServices;
 import util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginSignupController implements LoginSignupServices{
+public class LoginSignupController implements LoginSignupServices {
     private static LoginSignupServices loginSignupServices;
 
     public static LoginSignupServices getInstance() {

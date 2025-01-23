@@ -86,7 +86,7 @@ public class CustomerFormController implements Initializable {
     void btnDeleteOnAction(ActionEvent event) {
         boolean isExist = false;
         for (Customer customer : CustomerController.getInstance().getCustomers()) {
-            if (customer.getId().equals(txtID.getText())) {
+            if (customer.getCustomerId().equals(txtID.getText())) {
                 isExist = true;
                 break;
             }
@@ -123,7 +123,7 @@ public class CustomerFormController implements Initializable {
     void btnSearchOnAction(ActionEvent event) {
         boolean isExist = false;
         for (Customer customer : CustomerController.getInstance().getCustomers()) {
-            if (customer.getId().equals(txtID.getText())) {
+            if (customer.getCustomerId().equals(txtID.getText())) {
                 isExist = true;
                 break;
             }
@@ -131,7 +131,7 @@ public class CustomerFormController implements Initializable {
         if (isExist) {
             Customer customer = CustomerController.getInstance().searchCustomer(txtID.getText());
             if (customer != null) {
-                txtName.setText(customer.getName());
+                txtName.setText(customer.getCustomerName());
                 txtAddress.setText(customer.getAddress());
                 txtSalary.setText(customer.getSalary().toString());
             } else {

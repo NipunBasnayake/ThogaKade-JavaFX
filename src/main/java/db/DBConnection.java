@@ -19,6 +19,9 @@ public class DBConnection {
         connection = DriverManager.getConnection(url, user, password);
     }
     public static DBConnection getInstance() throws SQLException {
-        return dbConnection==null?dbConnection=new DBConnection():dbConnection;
+        if (dbConnection == null) {
+            dbConnection = new DBConnection();
+        }
+        return dbConnection;
     }
 }

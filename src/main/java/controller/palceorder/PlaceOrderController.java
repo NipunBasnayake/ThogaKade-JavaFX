@@ -44,9 +44,9 @@ public class PlaceOrderController implements PlaceOrderServices {
                 connection.setAutoCommit(false);
 
                 PreparedStatement insertStmt = connection.prepareStatement(sql);
-                insertStmt.setString(1, order.getId());
-                insertStmt.setString(2, order.getDate().toString());
-                insertStmt.setString(3, order.getCustromerId());
+                insertStmt.setString(1, order.getOrderId());
+                insertStmt.setString(2, order.getOrderDate().toString());
+                insertStmt.setString(3, order.getCustomerId());
                 boolean isAddedToOrder = insertStmt.executeUpdate() > 0;
 
                 if (isAddedToOrder) {
@@ -72,5 +72,4 @@ public class PlaceOrderController implements PlaceOrderServices {
             }
         }
     }
-
 }

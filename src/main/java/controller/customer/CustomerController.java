@@ -21,7 +21,7 @@ public class CustomerController implements CustomerServices {
     public boolean addCustomer(Customer customer) {
         String sql = "INSERT INTO customer VALUES (?,?,?,?)";
         try {
-            return CrudUtil.execute(sql, customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary());
+            return CrudUtil.execute(sql, customer.getCustomerId(), customer.getCustomerName(), customer.getAddress(), customer.getSalary());
         } catch (SQLException e) {
             return false;
         }
@@ -31,7 +31,7 @@ public class CustomerController implements CustomerServices {
     public boolean updateCustomer(Customer customer) {
         String sql = "UPDATE customer SET name=?,address=?,salary=? WHERE id=?";
         try {
-            return CrudUtil.execute(sql, customer.getName(), customer.getAddress(), customer.getSalary(), customer.getId());
+            return CrudUtil.execute(sql, customer.getCustomerName(), customer.getAddress(), customer.getSalary(), customer.getCustomerId());
         } catch (SQLException e) {
             return false;
         }
@@ -98,13 +98,13 @@ public class CustomerController implements CustomerServices {
     @Override
     public List<String> getCustomerIDs() {
         List<String> customerIDs = new ArrayList<>();
-        getCustomers().forEach(customer -> customerIDs.add(customer.getId()));
+        getCustomers().forEach(customer -> customerIDs.add(customer.getCustomerId()));
         return customerIDs;
     }
 
     @Override
     public String getCustomerName(String id) {
         Customer customer = searchCustomer(id);
-        return customer.getName();
+        return customer.getCustomerName();
     }
 }

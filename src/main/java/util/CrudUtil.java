@@ -7,6 +7,10 @@ import java.sql.SQLException;
 
 public class CrudUtil {
 
+    private CrudUtil() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static <T>T execute(String sql, Object... args) throws SQLException {
         PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
         for (int i = 0; i < args.length; i++) {

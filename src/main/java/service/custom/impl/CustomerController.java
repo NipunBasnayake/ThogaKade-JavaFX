@@ -53,16 +53,22 @@ public class CustomerController implements CustomerServices {
         String sql = "SELECT * FROM customer WHERE id=?";
         try {
             ResultSet res = CrudUtil.execute(sql, id);
-            return new Customer(
-                    res.getString(1),
-                    res.getString(2),
-                    res.getString(3),
-                    Double.parseDouble(res.getString(4))
-            );
+            if (res.next()) { // Check if a record exists
+                return new Customer(
+                        res.getString(1), // Assuming column 1 is 'id'
+                        res.getString(2), // Assuming column 2 is 'name'
+                        res.getString(3), // Assuming column 3 is 'address'
+                        res.getDouble(4)  // Assuming column 4 is 'creditLimit'
+                );
+            } else {
+                return null; // No customer found with the given ID
+            }
         } catch (SQLException e) {
+            e.printStackTrace(); // Log the error for debugging
             return null;
         }
     }
+
 
     @Override
     public List<Customer> getCustomers() {
@@ -105,7 +111,6 @@ public class CustomerController implements CustomerServices {
 
     @Override
     public String getCustomerName(String id) {
-        Customer customer = searchCustomer(id);
-        return customer.getCustomerName();
+        return searchCustomer(id).getCustomerName();
     }
 }

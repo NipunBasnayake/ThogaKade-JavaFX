@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceOrderController implements PlaceOrderServices {
     private static PlaceOrderController placeOrderController;
@@ -27,6 +30,26 @@ public class PlaceOrderController implements PlaceOrderServices {
             ResultSet resultSet = CrudUtil.execute(sql);
             resultSet.next();
             return resultSet.getString(1);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Order> getOrders() {
+        String sql = "SELECT * FROM orders";
+        try {
+            ResultSet resultSet = CrudUtil.execute(sql);
+            List<Order> orders = new ArrayList<>();
+            while (resultSet.next()) {
+                orders.add(new Order(
+                        resultSet.getString(1),
+                        LocalDate.parse(resultSet.getString(2)),
+                        resultSet.getString(3),
+                        null
+                ));
+            }
+            return orders;
         } catch (SQLException e) {
             return null;
         }

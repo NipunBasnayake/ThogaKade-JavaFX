@@ -13,6 +13,8 @@ public class Starter extends Application {
     public void start(Stage stage) throws Exception {
 //        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/loginandsignup-form.fxml"))));
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
+        stage.setTitle("Login and Sign Up");
+        stage.setResizable(false);
         stage.show();
     }
 

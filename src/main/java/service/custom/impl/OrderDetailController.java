@@ -4,8 +4,11 @@ import model.OrderDetail;
 import service.custom.OrderDetailServices;
 import util.CrudUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class OrderDetailController implements OrderDetailServices {
     private static OrderDetailController orderDetailController;
@@ -16,6 +19,27 @@ public class OrderDetailController implements OrderDetailServices {
         }
         return orderDetailController;
     }
+
+    @Override
+    public List<OrderDetail> getOrderDetails() {
+        String sql = "SELECT * FROM orderdetail";
+        List<OrderDetail> orderDetails = new ArrayList<>();
+
+        try (ResultSet res = CrudUtil.execute(sql)) {
+            while (res.next()) {
+                orderDetails.add(new OrderDetail(
+                        res.getString("orderId"),
+                        res.getString("itemCode"),
+                        res.getInt("qty"),
+                        res.getDouble("unitPrice")
+                ));
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return orderDetails;
+    }
+
 
     @Override
     public boolean addOrderDetail(ArrayList<OrderDetail> orderDetails) {

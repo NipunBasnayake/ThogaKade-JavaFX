@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,9 @@ public class DashboardFormController {
     public Tab customerPane;
     @FXML
     public Tab itemPane;
+
+    @FXML
+    public Tab ordersPane;
 
     public void placeOrderOnSelectionChanged() throws IOException {
         URL resource = this.getClass().getResource("/view/placeorder-form.fxml");
@@ -38,5 +42,12 @@ public class DashboardFormController {
         assert resource != null;
         Parent load = FXMLLoader.load(resource);
         this.itemPane.setContent(load);
+    }
+
+    public void orderOnSelectionChanged() throws IOException {
+        URL resource = this.getClass().getResource("/view/orders-form.fxml");
+        assert resource != null;
+        Parent load = FXMLLoader.load(resource);
+        this.ordersPane.setContent(load);
     }
 }

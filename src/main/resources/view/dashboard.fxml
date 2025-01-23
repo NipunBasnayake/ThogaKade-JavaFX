@@ -25,6 +25,11 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="971.0" />
                </content>
             </Tab>
+            <Tab fx:id="ordersPane" onSelectionChanged="#orderOnSelectionChanged" text="Orders Management">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="971.0" />
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

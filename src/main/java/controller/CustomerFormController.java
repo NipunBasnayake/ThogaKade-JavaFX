@@ -49,8 +49,8 @@ public class CustomerFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
         txtID.setText(generateCustomerId());
@@ -192,9 +192,7 @@ public class CustomerFormController implements Initializable {
 
     private void loadTable() {
         ObservableList<Customer> customerObservableArray = FXCollections.observableArrayList();
-        CustomerController.getInstance().getCustomers().forEach(customer -> {
-            customerObservableArray.add(customer);
-        });
+        customerObservableArray.addAll(CustomerController.getInstance().getCustomers());
         tblCustomer.setItems(customerObservableArray);
     }
 

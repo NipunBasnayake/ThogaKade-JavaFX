@@ -77,13 +77,12 @@ public class OrdersFormController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void btnSearchOnAction(ActionEvent event) {
-        if (txtOrderID.getText().isEmpty() && txtOrderDate.getText().isEmpty() && txtCustomerID.getText().isEmpty() && txtCustomerName.getText().isEmpty()) {
+        if (txtOrderID.getText().isEmpty() &&
+                txtOrderDate.getText().isEmpty() &&
+                txtCustomerID.getText().isEmpty() &&
+                txtCustomerName.getText().isEmpty()) {
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Search Warning");
             alert.setHeaderText("Please enter at least one search criterion!");
@@ -94,25 +93,24 @@ public class OrdersFormController implements Initializable {
         List<OrdersTableItems> filteredItems = new ArrayList<>();
 
         for (OrdersTableItems item : observableTableItems) {
-            if (
-                    (!txtOrderID.getText().isEmpty() && item.getOrderId().equals(txtOrderID.getText())) ||
-                            (!txtOrderDate.getText().isEmpty() && txtOrderDate.getText().equals(item.getDate())) ||
-                            (!txtCustomerName.getText().isEmpty() && txtCustomerName.getText().equals(item.getCustomer().split(" - ")[1])) ||
-                            (!txtCustomerID.getText().isEmpty() && txtCustomerID.getText().equals(item.getCustomer().split(" - ")[0]))
-            ) {
+            boolean matchesOrderId = txtOrderID.getText().isEmpty() || item.getOrderId().equals(txtOrderID.getText());
+            boolean matchesOrderDate = txtOrderDate.getText().isEmpty() || txtOrderDate.getText().equals(item.getDate().toString());
+            boolean matchesCustomerName = txtCustomerName.getText().isEmpty() || txtCustomerName.getText().equals(item.getCustomer().split(" - ")[1]);
+            boolean matchesCustomerId = txtCustomerID.getText().isEmpty() || txtCustomerID.getText().equals(item.getCustomer().split(" - ")[0]);
+
+            if (matchesOrderId && matchesOrderDate && matchesCustomerName && matchesCustomerId) {
                 filteredItems.add(item);
             }
         }
-
 
         if (filteredItems.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No Results");
             alert.setHeaderText("No matching orders found.");
             alert.showAndWait();
+        } else {
+            tblOrders.setItems(FXCollections.observableList(filteredItems));
         }
-
-        tblOrders.setItems(FXCollections.observableList(filteredItems));
     }
 
     @FXML
@@ -140,9 +138,7 @@ public class OrdersFormController implements Initializable {
                 }
             }
         }
-
         observableTableItems = FXCollections.observableList(tableItems);
         tblOrders.setItems(observableTableItems);
     }
-
 }

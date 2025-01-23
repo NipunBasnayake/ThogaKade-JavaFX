@@ -1,11 +1,8 @@
 package controller.order_detail;
 
-import db.DBConnection;
 import model.OrderDetail;
+import util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,7 +10,10 @@ public class OrderDetailController implements OrderDetailServices {
     private static OrderDetailController orderDetailController;
 
     public static OrderDetailController getInstance() {
-        return orderDetailController == null ? orderDetailController = new OrderDetailController() : orderDetailController;
+        if (orderDetailController == null) {
+            orderDetailController = new OrderDetailController();
+        }
+        return orderDetailController;
     }
 
     @Override
@@ -28,20 +28,11 @@ public class OrderDetailController implements OrderDetailServices {
     }
 
     public boolean addOrderDetail(OrderDetail orderDetail) {
-        String SQL = "INSERT INTO orderdetail VALUES (?,?,?,?)";
+        String sql = "INSERT INTO orderdetail VALUES (?,?,?,?)";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, orderDetail.getOrderId());
-            preparedStatement.setString(2, orderDetail.getItemCode());
-            preparedStatement.setInt(3, orderDetail.getQty());
-            preparedStatement.setDouble(4, orderDetail.getUnitPrice());
-            return preparedStatement.executeUpdate() > 0;
+            return CrudUtil.execute(sql, orderDetail.getOrderId(), orderDetail.getItemCode(), orderDetail.getQty(), orderDetail.getUnitPrice());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
-
-
-
 }

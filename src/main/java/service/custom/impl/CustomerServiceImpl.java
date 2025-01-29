@@ -1,19 +1,21 @@
 package service.custom.impl;
 
 import model.Customer;
-import service.custom.CustomerServices;
+import service.ServiceFactory;
+import service.custom.CustomerService;
 import util.CrudUtil;
+import util.ServiceType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerController implements CustomerServices {
-    private static CustomerController customerController;
+public class CustomerServiceImpl implements CustomerService {
+    private static CustomerServiceImpl customerController;
 
-    public static CustomerController getInstance() {
+    public static CustomerServiceImpl getInstance() {
         if (customerController == null) {
-            customerController = new CustomerController();
+            customerController = new CustomerServiceImpl();
         }
         return customerController;
     }

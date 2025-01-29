@@ -6,12 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import model.Customer;
-import service.custom.impl.CustomerController;
+import service.custom.impl.CustomerServiceImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddCustomerFormController implements Initializable {
+public class AddCustomerController implements Initializable {
 
     @FXML
     private JFXTextField txtAddress;
@@ -33,7 +33,7 @@ public class AddCustomerFormController implements Initializable {
             alert.setHeaderText("Please fill in all fields to add the customer.");
             alert.show();
         } else {
-            if (CustomerController.getInstance().addCustomer(new Customer(
+            if (CustomerServiceImpl.getInstance().addCustomer(new Customer(
                     txtID.getText(),
                     txtName.getText(),
                     txtAddress.getText(),
@@ -57,7 +57,7 @@ public class AddCustomerFormController implements Initializable {
     }
 
     private String generateCustomerId() {
-        int num = Integer.parseInt(CustomerController.getInstance().getLastId().substring(1));
+        int num = Integer.parseInt(CustomerServiceImpl.getInstance().getLastId().substring(1));
         num++;
         String newId = String.format("C%03d", num);
         return newId;

@@ -2,8 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import service.custom.impl.CustomerController;
-import service.custom.impl.ItemController;
+import service.custom.impl.CustomerServiceImpl;
+import service.custom.impl.ItemServiceImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,7 +30,7 @@ import model.CartItem;
 import model.Item;
 import model.Order;
 import model.OrderDetail;
-import service.custom.impl.PlaceOrderController;
+import service.custom.impl.PlaceOrderServiceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PlaceOrderFormController implements Initializable {
+public class PlaceOrderController implements Initializable {
 
     @FXML
     public TableColumn colUnitPrice;
@@ -98,7 +98,7 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     void btnAddtoCartOnAction(ActionEvent event) {
 
-        int qtyOnHand = ItemController.getInstance().getQtyOnHand(cmbItemCode.getSelectionModel().getSelectedItem().toString());
+        int qtyOnHand = ItemServiceImpl.getInstance().getQtyOnHand(cmbItemCode.getSelectionModel().getSelectedItem().toString());
         if (qtyOnHand >= Integer.parseInt(txtQty.getText())) {
             int indexOf = itemsObservableArray.indexOf(new CartItem(
                     cmbItemCode.getSelectionModel().getSelectedItem().toString(),
@@ -166,7 +166,7 @@ public class PlaceOrderFormController implements Initializable {
                 orderDetails
         );
 
-        if (PlaceOrderController.getInstance().placeOrder(order)) {
+        if (PlaceOrderServiceImpl.getInstance().placeOrder(order)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("Order Placed Successfully");
@@ -224,14 +224,14 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     private void generateOrderId() {
-        int num = Integer.parseInt(PlaceOrderController.getInstance().getLastOrderID().substring(1));
+        int num = Integer.parseInt(PlaceOrderServiceImpl.getInstance().getLastOrderID().substring(1));
         num++;
         String newId = String.format("D%03d", num);
         lblOrderId.setText(newId);
     }
 
     private void loadCustomerId() {
-        List<String> customerIDs = CustomerController.getInstance().getCustomerIDs();
+        List<String> customerIDs = CustomerServiceImpl.getInstance().getCustomerIDs();
         ObservableList<String> ids = FXCollections.observableArrayList();
         customerIDs.forEach(customerID -> {
             ids.add(customerID);
@@ -240,19 +240,19 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     private void getCustomerName() {
-        String customerName = CustomerController.getInstance().getCustomerName(cmbCustomerId.getValue().toString());
+        String customerName = CustomerServiceImpl.getInstance().getCustomerName(cmbCustomerId.getValue().toString());
         if (customerName != null) {
             lblCustomerName.setText(customerName);
         }
     }
 
     private void loadItemCodes() {
-        ObservableList<String> itemIDs = FXCollections.observableArrayList(ItemController.getInstance().getItemCodes());
+        ObservableList<String> itemIDs = FXCollections.observableArrayList(ItemServiceImpl.getInstance().getItemCodes());
         cmbItemCode.setItems(itemIDs);
     }
 
     private void setItemDetails() {
-        Item item = ItemController.getInstance().searchItem(cmbItemCode.getValue().toString());
+        Item item = ItemServiceImpl.getInstance().searchItem(cmbItemCode.getValue().toString());
         if (item != null) {
             lblDescription.setText(item.getDescription());
             lblUnitPrice.setText(item.getUnitPrice().toString());

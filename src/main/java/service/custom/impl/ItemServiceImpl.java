@@ -2,19 +2,19 @@ package service.custom.impl;
 
 import model.Item;
 import model.OrderDetail;
-import service.custom.ItemServices;
+import service.custom.ItemService;
 import util.CrudUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemController implements ItemServices {
-    private static ItemController itemController;
+public class ItemServiceImpl implements ItemService {
+    private static ItemServiceImpl itemController;
 
-    public static ItemController getInstance() {
+    public static ItemServiceImpl getInstance() {
         if (itemController == null) {
-            itemController = new ItemController();
+            itemController = new ItemServiceImpl();
         }
         return itemController;
     }

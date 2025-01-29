@@ -12,13 +12,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
-import service.custom.impl.CustomerController;
+import service.ServiceFactory;
+import service.custom.CustomerService;
+import service.custom.impl.CustomerServiceImpl;
+import util.ServiceType;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CustomerFormController implements Initializable {
+public class CustomerController implements Initializable {
+
+    CustomerService service = ServiceFactory.getInstance().getService(ServiceType.CUSTOMER);
 
     @FXML
     private TableColumn colAddress;
@@ -65,7 +70,7 @@ public class CustomerFormController implements Initializable {
             alert.setHeaderText("Please fill in all fields to add the customer.");
             alert.show();
         } else {
-            if (CustomerController.getInstance().addCustomer(new Customer(
+            if (service.addCustomer(new Customer(
                     txtID.getText(),
                     txtName.getText(),
                     txtAddress.getText(),
@@ -86,7 +91,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         boolean isExist = false;
-        for (Customer customer : CustomerController.getInstance().getCustomers()) {
+        for (Customer customer : service.getCustomers()) {
             if (customer.getCustomerId().equals(txtID.getText())) {
                 isExist = true;
                 break;
@@ -97,7 +102,7 @@ public class CustomerFormController implements Initializable {
             Optional<ButtonType> result = alertConfirmation.showAndWait();
             ButtonType buttonType = result.orElse(ButtonType.NO);
             if (buttonType == ButtonType.YES) {
-                if (CustomerController.getInstance().deleteCustomer(txtID.getText())) {
+                if (service.deleteCustomer(txtID.getText())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Customer Deleted");
                     alert.setHeaderText("Customer Successfully Deleted");
@@ -123,14 +128,14 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnSearchOnAction(ActionEvent event) {
         boolean isExist = false;
-        for (Customer customer : CustomerController.getInstance().getCustomers()) {
+        for (Customer customer : service.getCustomers()) {
             if (customer.getCustomerId().equals(txtID.getText())) {
                 isExist = true;
                 break;
             }
         }
         if (isExist) {
-            Customer customer = CustomerController.getInstance().searchCustomer(txtID.getText());
+            Customer customer = CustomerServiceImpl.getInstance().searchCustomer(txtID.getText());
             if (customer != null) {
                 txtName.setText(customer.getCustomerName());
                 txtAddress.setText(customer.getAddress());
@@ -161,7 +166,7 @@ public class CustomerFormController implements Initializable {
             Optional<ButtonType> result = alertConfirmation.showAndWait();
             ButtonType buttonType = result.orElse(ButtonType.NO);
             if (buttonType == ButtonType.YES) {
-                if (CustomerController.getInstance().updateCustomer(new Customer(
+                if (service.updateCustomer(new Customer(
                         txtID.getText(),
                         txtName.getText(),
                         txtAddress.getText(),
@@ -184,7 +189,7 @@ public class CustomerFormController implements Initializable {
     }
 
     private String generateCustomerId() {
-        int num = Integer.parseInt(CustomerController.getInstance().getLastId().substring(1));
+        int num = Integer.parseInt(CustomerServiceImpl.getInstance().getLastId().substring(1));
         num++;
         String newId = String.format("C%03d", num);
         return newId;
@@ -192,7 +197,7 @@ public class CustomerFormController implements Initializable {
 
     private void loadTable() {
         ObservableList<Customer> customerObservableArray = FXCollections.observableArrayList();
-        customerObservableArray.addAll(CustomerController.getInstance().getCustomers());
+        customerObservableArray.addAll(service.getCustomers());
         tblCustomer.setItems(customerObservableArray);
     }
 

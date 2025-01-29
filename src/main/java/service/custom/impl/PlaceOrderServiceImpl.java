@@ -2,7 +2,7 @@ package service.custom.impl;
 
 import db.DBConnection;
 import model.Order;
-import service.custom.PlaceOrderServices;
+import service.custom.PlaceOrderService;
 import util.CrudUtil;
 
 import java.sql.Connection;
@@ -13,12 +13,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceOrderController implements PlaceOrderServices {
-    private static PlaceOrderController placeOrderController;
+public class PlaceOrderServiceImpl implements PlaceOrderService {
+    private static PlaceOrderServiceImpl placeOrderController;
 
-    public static PlaceOrderController getInstance() {
+    public static PlaceOrderServiceImpl getInstance() {
         if (placeOrderController == null) {
-            placeOrderController = new PlaceOrderController();
+            placeOrderController = new PlaceOrderServiceImpl();
         }
         return placeOrderController;
     }
@@ -72,9 +72,9 @@ public class PlaceOrderController implements PlaceOrderServices {
                 boolean isAddedToOrder = insertStmt.executeUpdate() > 0;
 
                 if (isAddedToOrder) {
-                    boolean isAddedToOrderDetails = OrderDetailController.getInstance().addOrderDetail(order.getOrderDetails());
+                    boolean isAddedToOrderDetails = OrderDetailServiceImpl.getInstance().addOrderDetail(order.getOrderDetails());
                     if (isAddedToOrderDetails) {
-                        boolean isUpdatedItem = ItemController.getInstance().updateSellItem(order.getOrderDetails());
+                        boolean isUpdatedItem = ItemServiceImpl.getInstance().updateSellItem(order.getOrderDetails());
                         if (isUpdatedItem) {
                             connection.commit();
                             return true;

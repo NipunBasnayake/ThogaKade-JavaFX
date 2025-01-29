@@ -12,13 +12,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Item;
-import service.custom.impl.ItemController;
+import service.custom.impl.ItemServiceImpl;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ItemFormController implements Initializable {
+public class ItemController implements Initializable {
 
     @FXML
     private TableColumn colDescription;
@@ -65,7 +65,7 @@ public class ItemFormController implements Initializable {
             alert.setHeaderText("Please fill in all fields to add the item.");
             alert.show();
         }else {
-            if (ItemController.getInstance().addItem((new Item(
+            if (ItemServiceImpl.getInstance().addItem((new Item(
                     txtItemCode.getText(),
                     txtDescription.getText(),
                     Double.parseDouble(txtUnitPrice.getText()),
@@ -86,7 +86,7 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         boolean isExist = false;
-        for (Item item : ItemController.getInstance().getItems()) {
+        for (Item item : ItemServiceImpl.getInstance().getItems()) {
             if (item.getItemCode().equals(txtItemCode.getText())) {
                 isExist = true;
                 break;
@@ -97,7 +97,7 @@ public class ItemFormController implements Initializable {
             Optional<ButtonType> result = alertConfirmation.showAndWait();
             ButtonType buttonType = result.orElse(ButtonType.NO);
             if (buttonType == ButtonType.YES) {
-                if (ItemController.getInstance().deleteItem(txtItemCode.getText())) {
+                if (ItemServiceImpl.getInstance().deleteItem(txtItemCode.getText())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Item Deleted");
                     alert.show();
@@ -123,14 +123,14 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnSearchOnAction(ActionEvent event) {
         boolean isExist = false;
-        for (Item item : ItemController.getInstance().getItems()) {
+        for (Item item : ItemServiceImpl.getInstance().getItems()) {
             if (item.getItemCode().equals(txtItemCode.getText())) {
                 isExist = true;
                 break;
             }
         }
         if(isExist) {
-            Item item = ItemController.getInstance().searchItem(txtItemCode.getText());
+            Item item = ItemServiceImpl.getInstance().searchItem(txtItemCode.getText());
             if (item != null) {
                 txtDescription.setText(item.getDescription());
                 txtUnitPrice.setText(item.getUnitPrice().toString());
@@ -161,7 +161,7 @@ public class ItemFormController implements Initializable {
             Optional<ButtonType> result = alertConfirmation.showAndWait();
             ButtonType buttonType = result.orElse(ButtonType.NO);
             if (buttonType == ButtonType.YES) {
-                if (ItemController.getInstance().updateItem((new Item(
+                if (ItemServiceImpl.getInstance().updateItem((new Item(
                         txtItemCode.getText(),
                         txtDescription.getText(),
                         Double.parseDouble(txtUnitPrice.getText()),
@@ -184,7 +184,7 @@ public class ItemFormController implements Initializable {
     }
 
     private void generateItemCode() {
-        int num = Integer.parseInt(ItemController.getInstance().getLastId().substring(1));
+        int num = Integer.parseInt(ItemServiceImpl.getInstance().getLastId().substring(1));
         num++;
         String newId = String.format("P%03d", num);
         txtItemCode.setText(newId);
@@ -192,7 +192,7 @@ public class ItemFormController implements Initializable {
 
     private void loadTable() {
         ObservableList<Item> itemsObservableArray = FXCollections.observableArrayList();
-        ItemController.getInstance().getItems().forEach(item -> {
+        ItemServiceImpl.getInstance().getItems().forEach(item -> {
             itemsObservableArray.add(item);
         });
         tblItem.setItems(itemsObservableArray);

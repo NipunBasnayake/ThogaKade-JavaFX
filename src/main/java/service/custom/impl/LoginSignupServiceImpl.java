@@ -2,18 +2,18 @@ package service.custom.impl;
 
 import model.User;
 import org.jasypt.util.text.BasicTextEncryptor;
-import service.custom.LoginSignupServices;
+import service.custom.LoginSignupService;
 import util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginSignupController implements LoginSignupServices {
-    private static LoginSignupServices loginSignupServices;
+public class LoginSignupServiceImpl implements LoginSignupService {
+    private static LoginSignupService loginSignupServices;
 
-    public static LoginSignupServices getInstance() {
+    public static LoginSignupService getInstance() {
         if (loginSignupServices == null) {
-            loginSignupServices = new LoginSignupController();
+            loginSignupServices = new LoginSignupServiceImpl();
         }
         return loginSignupServices;
     }

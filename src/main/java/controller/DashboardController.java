@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +9,7 @@ import javafx.scene.control.TabPane;
 import java.io.IOException;
 import java.net.URL;
 
-public class DashboardFormController {
+public class DashboardController {
     @FXML
     public TabPane tabPane;
     @FXML

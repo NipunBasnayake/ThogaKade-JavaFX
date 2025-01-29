@@ -1,21 +1,20 @@
 package service.custom.impl;
 
 import model.OrderDetail;
-import service.custom.OrderDetailServices;
+import service.custom.OrderDetailService;
 import util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class OrderDetailController implements OrderDetailServices {
-    private static OrderDetailController orderDetailController;
+public class OrderDetailServiceImpl implements OrderDetailService {
+    private static OrderDetailServiceImpl orderDetailController;
 
-    public static OrderDetailController getInstance() {
+    public static OrderDetailServiceImpl getInstance() {
         if (orderDetailController == null) {
-            orderDetailController = new OrderDetailController();
+            orderDetailController = new OrderDetailServiceImpl();
         }
         return orderDetailController;
     }

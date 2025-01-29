@@ -13,17 +13,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Order;
 import model.OrderDetail;
 import model.OrdersTableItems;
-import service.custom.impl.CustomerController;
-import service.custom.impl.ItemController;
-import service.custom.impl.OrderDetailController;
-import service.custom.impl.PlaceOrderController;
+import service.custom.impl.CustomerServiceImpl;
+import service.custom.impl.ItemServiceImpl;
+import service.custom.impl.OrderDetailServiceImpl;
+import service.custom.impl.PlaceOrderServiceImpl;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class OrdersFormController implements Initializable {
+public class OrdersController implements Initializable {
 
     @FXML
     private TableColumn ColDate;
@@ -119,8 +119,8 @@ public class OrdersFormController implements Initializable {
     }
 
     private void populateTable() {
-        List<Order> orders = PlaceOrderController.getInstance().getOrders();
-        List<OrderDetail> orderDetails = OrderDetailController.getInstance().getOrderDetails();
+        List<Order> orders = PlaceOrderServiceImpl.getInstance().getOrders();
+        List<OrderDetail> orderDetails = OrderDetailServiceImpl.getInstance().getOrderDetails();
         List<OrdersTableItems> tableItems = new ArrayList<>();
 
         for (OrderDetail orderDetail : orderDetails) {
@@ -129,8 +129,8 @@ public class OrdersFormController implements Initializable {
                     tableItems.add(new OrdersTableItems(
                             order.getOrderId(),
                             order.getOrderDate(),
-                            order.getCustomerId() + " - " + CustomerController.getInstance().getCustomerName(order.getCustomerId()),
-                            orderDetail.getItemCode() + " - " + ItemController.getInstance().searchItem(orderDetail.getItemCode()).getDescription(),
+                            order.getCustomerId() + " - " + CustomerServiceImpl.getInstance().getCustomerName(order.getCustomerId()),
+                            orderDetail.getItemCode() + " - " + ItemServiceImpl.getInstance().searchItem(orderDetail.getItemCode()).getDescription(),
                             orderDetail.getQty(),
                             orderDetail.getUnitPrice(),
                             orderDetail.getQty() * orderDetail.getUnitPrice()

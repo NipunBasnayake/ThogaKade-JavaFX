@@ -2,11 +2,12 @@ package service.custom;
 
 import model.Item;
 import model.OrderDetail;
+import service.SuperService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ItemServices {
+public interface ItemService extends SuperService {
     boolean addItem(Item item);
     boolean updateItem(Item item);
     boolean deleteItem(String id);

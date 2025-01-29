@@ -13,11 +13,11 @@ import javafx.stage.Stage;
 import model.User;
 import animatefx.animation.*;
 import org.jasypt.util.text.BasicTextEncryptor;
-import service.custom.impl.LoginSignupController;
+import service.custom.impl.LoginSignupServiceImpl;
 
 import java.io.IOException;
 
-public class LoginSignupFormController {
+public class LoginSignupController {
     public JFXPasswordField txtPasswordlogin;
     @FXML
     private JFXTextField txtUserNameSignup;
@@ -54,12 +54,12 @@ public class LoginSignupFormController {
             alert.setHeaderText("Fields cannot be empty");
         }else{
             if (txtPasswordSignup.getText().equals(txtPasswordConfirmSignup.getText())) {
-                if (!LoginSignupController.getInstance().checkUser(txtEmailSignup.getText())) {
+                if (!LoginSignupServiceImpl.getInstance().checkUser(txtEmailSignup.getText())) {
                     BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
                     String key = "@bCd3f";
                     basicTextEncryptor.setPassword(key);
 
-                    if (LoginSignupController.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), basicTextEncryptor.encrypt(txtPasswordSignup.getText())))){
+                    if (LoginSignupServiceImpl.getInstance().signup(new User(txtUserNameSignup.getText(), txtEmailSignup.getText(), basicTextEncryptor.encrypt(txtPasswordSignup.getText())))){
                         loadDashBoard();
                         Stage currentStage = (Stage) txtEmailSignup.getScene().getWindow();
                         if (currentStage != null) {
@@ -95,7 +95,7 @@ public class LoginSignupFormController {
             alert.setHeaderText("Fields cannot be empty");
             alert.show();
         } else {
-            if (LoginSignupController.getInstance().login(txtEmail.getText(), txtPasswordlogin.getText())) {
+            if (LoginSignupServiceImpl.getInstance().login(txtEmail.getText(), txtPasswordlogin.getText())) {
                 loadDashBoard();
                 Stage currentStage = (Stage) txtEmail.getScene().getWindow();
                 if (currentStage != null) {

@@ -73,7 +73,8 @@ The Thogakade JavaFX application is a point-of-sale system designed to streamlin
 ![User Login](Screenshots/SignIn.png)  
 ![Place Order](Screenshots/PlaceOrder.png)  
 ![Customer Management](Screenshots/CustomerManagement.png)  
-![Item Management](Screenshots/ItemManagement.png)  
+![Item Management](Screenshots/ItemManagemant.png)
+![Order Details Management](Screenshots/OrderDetailsManagement.png)
 
 ---
 

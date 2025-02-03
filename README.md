@@ -23,13 +23,13 @@ The Thogakade JavaFX application is a point-of-sale system designed to streamlin
 ---
 
 ## **Technologies Used**
-- **Programming Language**: Java
-- **Framework**: JavaFX for building the user interface
-- **Database**: MySQL for storing user, item, customer, and order data
-- **Database Connectivity**: JDBC for connecting to the MySQL database
-- **Security**: Password encryption and decryption using Java's security libraries
-- **IDE**: IntelliJ IDEA for development
-- **Build Tool**: Maven for project management
+- **Programming Language**: Java  
+- **Framework**: JavaFX for building the user interface  
+- **Database**: MySQL for storing user, item, customer, and order data  
+- **Database Connectivity**: Hibernate with JPA for connecting to the MySQL database  
+- **Security**: Password encryption and decryption using Java's security libraries  
+- **IDE**: IntelliJ IDEA for development  
+- **Build Tool**: Maven for project management  
 
 ---
 

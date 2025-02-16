@@ -1,6 +1,6 @@
 package service.custom;
 
-import model.OrderDetail;
+import dto.OrderDetail;
 import service.SuperService;
 
 import java.util.ArrayList;

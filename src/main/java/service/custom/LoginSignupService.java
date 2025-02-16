@@ -1,6 +1,6 @@
 package service.custom;
 
-import model.User;
+import dto.User;
 import service.SuperService;
 
 public interface LoginSignupService extends SuperService {

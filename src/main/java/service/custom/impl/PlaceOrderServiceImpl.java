@@ -1,7 +1,7 @@
 package service.custom.impl;
 
 import db.DBConnection;
-import model.Order;
+import dto.Order;
 import service.custom.PlaceOrderService;
 import util.CrudUtil;
 
@@ -94,4 +94,5 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
             }
         }
     }
+
 }

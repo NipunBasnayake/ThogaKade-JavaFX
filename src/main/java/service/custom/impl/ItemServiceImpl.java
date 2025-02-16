@@ -1,7 +1,7 @@
 package service.custom.impl;
 
-import model.Item;
-import model.OrderDetail;
+import dto.Item;
+import dto.OrderDetail;
 import service.custom.ItemService;
 import util.CrudUtil;
 

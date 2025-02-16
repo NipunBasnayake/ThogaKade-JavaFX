@@ -1,6 +1,6 @@
 package service.custom;
 
-import model.Order;
+import dto.Order;
 import service.SuperService;
 
 import java.sql.SQLException;

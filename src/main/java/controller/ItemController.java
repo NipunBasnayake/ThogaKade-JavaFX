@@ -11,7 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Item;
+import dto.Item;
 import service.custom.impl.ItemServiceImpl;
 
 import java.net.URL;

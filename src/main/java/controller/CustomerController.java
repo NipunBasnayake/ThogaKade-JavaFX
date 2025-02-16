@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.inject.Inject;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
+import dto.Customer;
 import service.ServiceFactory;
 import service.custom.CustomerService;
 import service.custom.impl.CustomerServiceImpl;
@@ -22,8 +23,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
-
-    CustomerService service = ServiceFactory.getInstance().getService(ServiceType.CUSTOMER);
+    @Inject
+    CustomerService service;
 
     @FXML
     private TableColumn colAddress;
@@ -52,14 +53,15 @@ public class CustomerController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-        txtID.setText(generateCustomerId());
-        loadTable();
+//        txtID.setText(generateCustomerId());
+//        loadTable();
     }
 
     @FXML

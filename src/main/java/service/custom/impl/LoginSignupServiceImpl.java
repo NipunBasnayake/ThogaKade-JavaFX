@@ -1,6 +1,6 @@
 package service.custom.impl;
 
-import model.User;
+import dto.User;
 import org.jasypt.util.text.BasicTextEncryptor;
 import service.custom.LoginSignupService;
 import util.CrudUtil;

@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.User;
+import dto.User;
 import animatefx.animation.*;
 import org.jasypt.util.text.BasicTextEncryptor;
 import service.custom.impl.LoginSignupServiceImpl;

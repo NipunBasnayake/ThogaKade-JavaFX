@@ -26,10 +26,10 @@ import java.text.SimpleDateFormat;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.CartItem;
-import model.Item;
-import model.Order;
-import model.OrderDetail;
+import dto.CartItem;
+import dto.Item;
+import dto.Order;
+import dto.OrderDetail;
 import service.custom.impl.PlaceOrderServiceImpl;
 
 import java.time.LocalDate;
@@ -202,7 +202,7 @@ public class PlaceOrderController implements Initializable {
 
         loadDateAdnTime();
         generateOrderId();
-        loadCustomerId();
+//        loadCustomerId();
         loadItemCodes();
     }
 

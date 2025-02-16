@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import model.Customer;
+import dto.Customer;
 import service.custom.impl.CustomerServiceImpl;
 
 import java.net.URL;

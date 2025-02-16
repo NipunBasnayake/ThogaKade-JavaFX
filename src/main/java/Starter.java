@@ -1,8 +1,11 @@
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jasypt.util.text.BasicTextEncryptor;
+import util.AppModule;
 
 public class Starter extends Application {
     public static void main(String[] args) {
@@ -11,11 +14,10 @@ public class Starter extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/loginandsignup-form.fxml"))));
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
-        stage.setTitle("Login and Sign Up");
-        stage.setResizable(false);
+        Injector injector = Guice.createInjector(new AppModule());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
+        loader.setControllerFactory(injector::getInstance);
+        stage.setScene(new Scene(loader.load()));
         stage.show();
     }
-
 }

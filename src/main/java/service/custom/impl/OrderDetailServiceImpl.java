@@ -1,6 +1,6 @@
 package service.custom.impl;
 
-import model.OrderDetail;
+import dto.OrderDetail;
 import service.custom.OrderDetailService;
 import util.CrudUtil;
 
@@ -18,6 +18,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         return orderDetailController;
     }
+
 
     @Override
     public List<OrderDetail> getOrderDetails() {
